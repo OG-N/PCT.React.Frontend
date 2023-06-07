@@ -19,6 +19,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import NavbarNotificationsDropdown from "./NavbarNotificationsDropdown";
 import NavbarUserDropdown from "./NavbarUserDropdown";
+import {useNavigate} from "react-router-dom";
 
 const AppBar = styled(MuiAppBar)`
   background: ${(props) => props.theme.header.background};
@@ -33,6 +34,7 @@ const IconButton = styled(MuiIconButton)`
 `;
 
 const Navbar = ({ onDrawerToggle }) => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -85,11 +87,24 @@ const Navbar = ({ onDrawerToggle }) => {
                 onClose={handleClose}
                 TransitionComponent={Fade}
               >
-                <MenuItem onClick={handleClose}>Products</MenuItem>
-                <MenuItem onClick={handleClose}>Locations</MenuItem>
-                <MenuItem onClick={handleClose}>Stakeholders</MenuItem>
-                <MenuItem onClick={handleClose}>Transport</MenuItem>
-                <MenuItem onClick={handleClose}>Carriers</MenuItem>
+                <MenuItem onClick={() => {
+                  navigate("/master-data-registry/products");
+                  handleClose();
+                }}>Products</MenuItem>
+                <MenuItem onClick={() => {
+                  navigate("/master-data-registry/locations");
+                  handleClose();
+                }}>Locations</MenuItem>
+                <MenuItem onClick={() => {
+                  navigate("/master-data-registry/transport");
+                  handleClose();
+                }}>
+                  Transport
+                </MenuItem>
+                <MenuItem onClick={() => {
+                  navigate("/master-data-registry/carriers");
+                  handleClose();
+                }}>Carriers</MenuItem>
                 <MenuItem onClick={handleClose}>Units Of Measure</MenuItem>
                 <MenuItem onClick={handleClose}>MDR Quality</MenuItem>
                 <MenuItem onClick={handleClose}>Governance</MenuItem>

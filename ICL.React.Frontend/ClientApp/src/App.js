@@ -16,6 +16,8 @@ import useTheme from "./hooks/useTheme";
 import { store } from "./redux/store";
 import createEmotionCache from "./utils/createEmotionCache";
 import {AuthenticatedTemplate, useMsalAuthentication} from "@azure/msal-react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {InteractionType} from "@azure/msal-browser";
 
 // import { PublicClientApplication } from "@azure/msal-browser";
@@ -73,6 +75,7 @@ function App({ emotionCache = clientSideEmotionCache }) {
             </MuiThemeProvider>
           </LocalizationProvider>
         </Provider>
+        <ToastContainer position="top-right" newestOnTop />
       </HelmetProvider>
     </CacheProvider>
   );

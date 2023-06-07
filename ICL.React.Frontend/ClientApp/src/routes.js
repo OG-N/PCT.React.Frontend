@@ -33,7 +33,7 @@ const Products = async(() => import("./pages/dashboards/products"));
 
 const CustomerOrders = async(() => import("./pages/dashboards/Default/OutboundPO"));
 const CustomerOrdersValidated = async(() => import("./pages/dashboards/Default/CustomerOrdersValidated"));
-const CustomerOrdersProducts = async(() => import("./pages/dashboards/products"));
+// const CustomerOrdersProducts = async(() => import("./pages/dashboards/products"));
 
 
 // const Analytics = async(() => import("./pages/dashboards/Analytics"));
@@ -132,14 +132,23 @@ const CountryMonitoring = async(() => import("./pages/enable/CountryMonitoring")
 const FreightBillAudit = async(() => import("./pages/home/FreightBillAudit"));
 const QuarterlySupplyPlans = async(() => import("./pages/plan/QuarterlySupplyPlans"));
 const InsuranceRequirements = async(() => import("./pages/store/InsuranceRequirements"));
+const MasterDataRegistry = async(() => import("./pages/master-data-registry/index"));
+const Locations = async(() => import("./pages/master-data-registry/locations/index"));
+const NewProduct = async(() => import("./pages/master-data-registry/products/NewProduct"));
+const MasterDataRegistryProducts = async(() => import("./pages/master-data-registry/products"));
+const NewProductUnit = async(() => import("./pages/master-data-registry/products/product-units/NewProductUnit"));
+const NewProductCategory = async(() => import("./pages/master-data-registry/products/product-category/NewProductCategory"));
+const NewLocation = async(() => import("./pages/master-data-registry/locations/NewLocation"));
+const MasterDataRegistryTransport = async(() => import("./pages/master-data-registry/transport/index"));
+const Carriers = async(() => import("./pages/master-data-registry/carriers/index"));
 
 const routes = [
   {
     path: "/",
     element: (
-        <AuthGuard>
-          <DashboardLayout />
-        </AuthGuard>
+      <AuthGuard>
+        <DashboardLayout />
+      </AuthGuard>
     ),
     children: [
       {
@@ -531,6 +540,60 @@ const routes = [
     ],
   },
   {
+    path: "master-data-registry",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "",
+        element: <MasterDataRegistry />,
+      },
+      {
+        path: "products",
+        element: <MasterDataRegistryProducts />
+      },
+      {
+        path: "products/new-product",
+        element: <NewProduct />,
+      },
+      {
+        path: "products/new-product/:id",
+        element: <NewProduct />,
+      },
+      {
+        path: "products/product-units/new-product-unit",
+        element: <NewProductUnit />,
+      },
+      {
+        path: "products/product-units/new-product-unit/:id",
+        element: <NewProductUnit />,
+      },
+      {
+        path: "products/product-category/new-product-category",
+        element: <NewProductCategory />,
+      },
+      {
+        path: "products/product-category/new-product-category/:id",
+        element: <NewProductCategory />,
+      },
+      {
+        path: "locations",
+        element: <Locations />,
+      },
+      {
+        path: "locations/new-location",
+        element: <NewLocation />,
+      },
+      {
+        path: "transport",
+        element: <MasterDataRegistryTransport />,
+      },
+      {
+        path: "carriers",
+        element: <Carriers />,
+      },
+    ],
+  },
+  {
     path: "about",
     element: <DashboardLayout />,
     children: [
@@ -565,9 +628,9 @@ const routes = [
   {
     path: "customer-orders",
     element: (
-        <AuthGuard>
-          <DashboardLayout />
-        </AuthGuard>
+      <AuthGuard>
+        <DashboardLayout />
+      </AuthGuard>
     ),
     children: [
       {
@@ -642,9 +705,9 @@ const routes = [
   {
     path: "customer-order-upload",
     element: (
-        <AuthGuard>
-          <DashboardLayout />
-        </AuthGuard>
+      <AuthGuard>
+        <DashboardLayout />
+      </AuthGuard>
     ),
     children: [
       {
@@ -653,86 +716,6 @@ const routes = [
       },
     ],
   },
-  // {
-  //   path: "pages",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "profile",
-  //       element: <Profile />,
-  //     },
-  //     {
-  //       path: "settings",
-  //       element: <Settings />,
-  //     },
-  //     {
-  //       path: "pricing",
-  //       element: <Pricing />,
-  //     },
-  //     {
-  //       path: "chat",
-  //       element: <Chat />,
-  //     },
-  //     {
-  //       path: "blank",
-  //       element: <Blank />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "projects",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: <Projects />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "invoices",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: <InvoiceList />,
-  //     },
-  //     {
-  //       path: "detail",
-  //       element: <InvoiceDetails />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "orders",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: <Orders />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "tasks",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: <Tasks />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "calendar",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: <Calendar />,
-  //     },
-  //   ],
-  // },
   {
     path: "auth",
     element: <AuthLayout />,
@@ -759,252 +742,6 @@ const routes = [
       },
     ],
   },
-  // {
-  //   path: "components",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "accordion",
-  //       element: <Accordion />,
-  //     },
-  //     {
-  //       path: "alerts",
-  //       element: <Alerts />,
-  //     },
-  //     {
-  //       path: "avatars",
-  //       element: <Avatars />,
-  //     },
-  //     {
-  //       path: "badges",
-  //       element: <Badges />,
-  //     },
-  //     {
-  //       path: "buttons",
-  //       element: <Buttons />,
-  //     },
-  //     {
-  //       path: "cards",
-  //       element: <Cards />,
-  //     },
-  //     {
-  //       path: "chips",
-  //       element: <Chips />,
-  //     },
-  //     {
-  //       path: "dialogs",
-  //       element: <Dialogs />,
-  //     },
-  //     {
-  //       path: "lists",
-  //       element: <Lists />,
-  //     },
-  //     {
-  //       path: "menus",
-  //       element: <Menus />,
-  //     },
-  //     {
-  //       path: "pagination",
-  //       element: <Pagination />,
-  //     },
-  //     {
-  //       path: "progress",
-  //       element: <Progress />,
-  //     },
-  //     {
-  //       path: "snackbars",
-  //       element: <Snackbars />,
-  //     },
-  //     {
-  //       path: "tooltips",
-  //       element: <Tooltips />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "forms",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "pickers",
-  //       element: <Pickers />,
-  //     },
-  //     {
-  //       path: "selection-controls",
-  //       element: <SelectionCtrls />,
-  //     },
-  //     {
-  //       path: "selects",
-  //       element: <Selects />,
-  //     },
-  //     {
-  //       path: "text-fields",
-  //       element: <TextFields />,
-  //     },
-  //     {
-  //       path: "editors",
-  //       element: <Editors />,
-  //     },
-  //     {
-  //       path: "formik",
-  //       element: <Formik />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "tables",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "simple-table",
-  //       element: <SimpleTable />,
-  //     },
-  //     {
-  //       path: "advanced-table",
-  //       element: <AdvancedTable />,
-  //     },
-  //     {
-  //       path: "data-grid",
-  //       element: <DataGrid />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "icons",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "material-icons",
-  //       element: <MaterialIcons />,
-  //     },
-  //     {
-  //       path: "feather-icons",
-  //       element: <FeatherIcons />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "charts",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "chartjs",
-  //       element: <Chartjs />,
-  //     },
-  //     {
-  //       path: "apexcharts",
-  //       element: <ApexCharts />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "maps",
-  //   element: <DashboardLayout />,
-  //   children: [
-  //     {
-  //       path: "google-maps",
-  //       element: <GoogleMaps />,
-  //     },
-  //     {
-  //       path: "vector-maps",
-  //       element: <VectorMaps />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "documentation",
-  //   element: <DocLayout />,
-  //   children: [
-  //     {
-  //       path: "welcome",
-  //       element: <Welcome />,
-  //     },
-  //     {
-  //       path: "getting-started",
-  //       element: <GettingStarted />,
-  //     },
-  //     {
-  //       path: "routing",
-  //       element: <Routing />,
-  //     },
-  //     {
-  //       path: "auth/auth0",
-  //       element: <Auth0 />,
-  //     },
-  //     {
-  //       path: "auth/cognito",
-  //       element: <Cognito />,
-  //     },
-  //     {
-  //       path: "auth/firebase",
-  //       element: <Firebase />,
-  //     },
-  //     {
-  //       path: "auth/jwt",
-  //       element: <JWT />,
-  //     },
-  //     {
-  //       path: "guards",
-  //       element: <Guards />,
-  //     },
-  //     {
-  //       path: "environment-variables",
-  //       element: <EnvironmentVariables />,
-  //     },
-  //     {
-  //       path: "deployment",
-  //       element: <Deployment />,
-  //     },
-  //     {
-  //       path: "theming",
-  //       element: <Theming />,
-  //     },
-  //     {
-  //       path: "api-calls",
-  //       element: <APICalls />,
-  //     },
-  //     {
-  //       path: "redux",
-  //       element: <Redux />,
-  //     },
-  //     {
-  //       path: "internationalization",
-  //       element: <Internationalization />,
-  //     },
-  //     {
-  //       path: "eslint-and-prettier",
-  //       element: <ESLintAndPrettier />,
-  //     },
-  //     {
-  //       path: "support",
-  //       element: <Support />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "changelog",
-  //   element: <DocLayout />,
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: <Changelog />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "private",
-  //   element: (
-  //     <AuthGuard>
-  //       <DashboardLayout />
-  //     </AuthGuard>
-  //   ),
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: <ProtectedPage />,
-  //     },
-  //   ],
-  // },
   {
     path: "*",
     element: <AuthLayout />,
