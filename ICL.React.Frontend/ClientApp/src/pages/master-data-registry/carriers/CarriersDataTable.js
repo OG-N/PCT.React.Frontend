@@ -15,10 +15,16 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {getCategoryById} from "../../../api/category";
 import {getUnitById} from "../../../api/unit";
 import {getCarriers} from "../../../api/carrier";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import {deleteVendorById} from "../../../api/vendor";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -36,12 +42,20 @@ const themeCustom = createTheme({
 
 const CarriersDataTable = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const navigate = useNavigate();
   const [filterModel, setFilterModel] = useState({
     items: [],
   });
+  const [isDeleteModalOpen, setOpenDeleteModal] = React.useState(false);
+  const [id, setId] = React.useState();
+  const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
+  const { refetch } = useQuery(
+    ["deleteVendorById", id],
+    deleteVendorById,
+    { enabled: false }
+  );
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -53,6 +67,11 @@ const CarriersDataTable = () => {
     navigate(
       `/master-data-registry/carriers/new-carrier/${params.id}`
     );
+  };
+  const handleDeleteVendor = async () => {
+    await refetch();
+    setOpenDeleteModal(false);
+    await queryClient.invalidateQueries(["getCarriers"]);
   };
   const {
     data: carriersData,
@@ -80,6 +99,16 @@ const CarriersDataTable = () => {
     if (result && result.data) {
       return result.data.data.name;
     }
+  }
+
+  function handleOpenDeleteModal(id) {
+    setId(id);
+    setOpenDeleteModal(true);
+    handleClose();
+  }
+
+  function handleCloseModal() {
+    setOpenDeleteModal(false);
   }
 
   return (
@@ -156,7 +185,9 @@ const CarriersDataTable = () => {
                         Edit
                       </MenuItem>
                       <Divider />
-                      <MenuItem>
+                      <MenuItem
+                        onClick={() => handleOpenDeleteModal(params.id)}
+                      >
                         <DeleteIcon />
                         Delete
                       </MenuItem>
@@ -169,6 +200,32 @@ const CarriersDataTable = () => {
             components={{ Toolbar: GridToolbar }}
           />
         </div>
+        <Dialog
+          open={isDeleteModalOpen}
+          onClose={handleCloseModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Delete Vendor
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete Vendor?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleDeleteVendor}
+              color="primary"
+            >
+              Yes
+            </Button>
+            <Button onClick={handleCloseModal} color="error" autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
     </Card>
   );

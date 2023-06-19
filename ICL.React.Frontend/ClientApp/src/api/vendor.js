@@ -17,3 +17,8 @@ export const getVendorById = async ({ queryKey }) => {
   const [, id] = queryKey;
   return await axios.get(`${apiRoutes.vendor}/${id}`);
 };
+
+export const deleteVendorById = async ({ queryKey }) => {
+  const [, id] = queryKey;
+  return await axios.delete(`${apiRoutes.vendor}/${id}`);
+};

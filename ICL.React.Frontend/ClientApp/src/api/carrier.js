@@ -17,3 +17,8 @@ export const getCarrierById = async ({ queryKey }) => {
   const [, id] = queryKey;
   return await axios.get(`${apiRoutes.carrier}/${id}`);
 };
+
+export const deleteCarrierById = async ({ queryKey }) => {
+  const [, id] = queryKey;
+  return await axios.delete(`${apiRoutes.carrier}/${id}`);
+};

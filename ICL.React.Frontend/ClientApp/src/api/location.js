@@ -17,3 +17,8 @@ export const getLocationById = async ({ queryKey }) => {
 export const updateLocation = async (values) => {
   return await axios.put(`${apiRoutes.location}`, values);
 };
+
+export const deleteLocationById = async ({ queryKey }) => {
+  const [, id] = queryKey;
+  return await axios.delete(`${apiRoutes.location}/${id}`);
+};
