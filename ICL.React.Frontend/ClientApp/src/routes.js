@@ -139,6 +139,7 @@ const MasterDataRegistryProducts = async(() => import("./pages/master-data-regis
 const NewLocation = async(() => import("./pages/master-data-registry/locations/NewLocation"));
 const MasterDataRegistryTransport = async(() => import("./pages/master-data-registry/transport/index"));
 const Carriers = async(() => import("./pages/master-data-registry/carriers/index"));
+const NewCarrier = async(() => import("./pages/master-data-registry/carriers/NewCarrier"));
 const Unit = async(() => import("./pages/master-data-registry/unit/index"));
 const NewUnit = async(() => import("./pages/master-data-registry/unit/NewUnit"));
 const Category = async(() => import("./pages/master-data-registry/category/index"));
@@ -580,6 +581,14 @@ const routes = [
       {
         path: "carriers",
         element: <Carriers />,
+      },
+      {
+        path: "carriers/new-carrier",
+        element: <NewCarrier />
+      },
+      {
+        path: "carriers/new-carrier/:id",
+        element: <NewCarrier />
       },
       {
         path: "units",

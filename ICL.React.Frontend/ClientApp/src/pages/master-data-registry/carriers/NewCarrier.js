@@ -17,10 +17,10 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import {getLocationById, newLocation, updateLocation} from "../../../api/location";
 import MenuItem from "@mui/material/MenuItem";
 import {getCategories} from "../../../api/category";
 import {getUnits} from "../../../api/unit";
+import {getCarrierById, newCarrier, updateCarrier} from "../../../api/carrier";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -40,7 +40,7 @@ const themeCustom = createTheme({
   },
 });
 
-const NewLocation = () => {
+const NewCarrier = () => {
   const navigate = useNavigate();
   let { id } = useParams();
 
@@ -48,7 +48,7 @@ const NewLocation = () => {
     data,
     isLoading,
     isError
-  } = useQuery(["getLocationById", id], getLocationById, {
+  } = useQuery(["getCarrierById", id], getCarrierById, {
     enabled: !!id,
   });
   const {
@@ -61,8 +61,8 @@ const NewLocation = () => {
     isLoading: isLoadingUnits,
     isError: isErrorUnits,
   } = useQuery(["getUnits"], getUnits);
-  const mutation = useMutation({ mutationFn: newLocation });
-  const updateMutation = useMutation({ mutationFn: updateLocation });
+  const mutation = useMutation({ mutationFn: newCarrier });
+  const updateMutation = useMutation({ mutationFn: updateCarrier });
 
   const formik = useFormik({
     initialValues: {
@@ -70,14 +70,12 @@ const NewLocation = () => {
       description: "",
       category: "",
       unit: "",
-      country: "",
     },
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Required"),
       description: Yup.string().required("Required"),
       category: Yup.string().required("Required"),
       unit: Yup.string().required("Required"),
-      country: Yup.string().required("Required"),
     }),
     onSubmit: async (values, { resetForm,  setSubmitting }) => {
       try {
@@ -87,10 +85,10 @@ const NewLocation = () => {
         } else {
           await mutation.mutateAsync(values);
         }
-        toast("Successfully Created a Location", {
+        toast("Successfully Created a Carrier", {
           type: "success",
         });
-        navigate("/master-data-registry/locations");
+        navigate("/master-data-registry/carriers");
       } catch (error) {
         toast(error.response.data, {
           type: "error",
@@ -107,7 +105,6 @@ const NewLocation = () => {
           description: data.data.description ? data.data.description : "",
           category: data.data.category,
           unit: data.data.unit,
-          country: data.data.country,
         });
       }
     }
@@ -131,7 +128,7 @@ const NewLocation = () => {
                       Master Data Registry
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      New Location
+                      New Carrier
                     </Typography>
                   </Grid>
                 </Grid>
@@ -139,7 +136,7 @@ const NewLocation = () => {
                   <Grid item md={6}>
                     <TextField
                       name="name"
-                      label="Location Name"
+                      label="Carrier Name"
                       value={formik.values.name}
                       error={Boolean(
                         formik.touched.name && formik.errors.name
@@ -147,25 +144,6 @@ const NewLocation = () => {
                       fullWidth
                       helperText={
                         formik.touched.name && formik.errors.name
-                      }
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      variant="outlined"
-                      my={2}
-                    />
-                  </Grid>
-
-                  <Grid item md={6}>
-                    <TextField
-                      name="country"
-                      label="Country"
-                      value={formik.values.country}
-                      error={Boolean(
-                        formik.touched.country && formik.errors.country
-                      )}
-                      fullWidth
-                      helperText={
-                        formik.touched.country && formik.errors.country
                       }
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
@@ -193,7 +171,7 @@ const NewLocation = () => {
                       my={2}
                     >
                       <MenuItem disabled value="">
-                        Select Location Category
+                        Select Carrier Category
                       </MenuItem>
                       {!isLoadingCategories && !isErrorCategories
                         ? categories.data.map((option) => (
@@ -224,7 +202,7 @@ const NewLocation = () => {
                       my={2}
                     >
                       <MenuItem disabled value="">
-                        Select Location Unit
+                        Select Carrier Unit
                       </MenuItem>
                       {!isLoadingUnits && !isErrorUnits
                         ? units.data.map((option) => (
@@ -260,11 +238,11 @@ const NewLocation = () => {
                 </Grid>
                 <Stack direction="row" spacing={2}>
                   <ThemeProvider theme={themeCustom}>
-                    <Button type="submit" variant="contained" color="custom_black" onClick={() => navigate("/master-data-registry/locations")}>
+                    <Button type="submit" variant="contained" color="custom_black" onClick={() => navigate("/master-data-registry/carriers")}>
                       Cancel
                     </Button>
                     <Button type="submit" variant="contained" color="custom_green">
-                      Save New Location
+                      Save New Carrier
                     </Button>
                   </ThemeProvider>
                 </Stack>
@@ -276,4 +254,4 @@ const NewLocation = () => {
     </React.Fragment>
   );
 };
-export default NewLocation;
+export default NewCarrier;

@@ -19,6 +19,7 @@ import {spacing} from "@mui/system";
 import {NavLink} from "react-router-dom";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import CarriersDataTable from "./CarriersDataTable";
 
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
@@ -51,6 +52,7 @@ const Carriers = () => {
           </Typography>
         </Grid>
         <Grid item md={12}>
+          <CarriersDataTable />
         </Grid>
       </Grid>
     </React.Fragment>

@@ -16,9 +16,9 @@ import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useQuery} from "@tanstack/react-query";
-import {getLocations} from "../../../api/location";
 import {getCategoryById} from "../../../api/category";
 import {getUnitById} from "../../../api/unit";
+import {getCarriers} from "../../../api/carrier";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -34,7 +34,7 @@ const themeCustom = createTheme({
   },
 });
 
-const LocationsDataTable = () => {
+const CarriersDataTable = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -49,16 +49,16 @@ const LocationsDataTable = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleEditLocation = (params) => {
+  const handleEditCarrier = (params) => {
     navigate(
-      `/master-data-registry/locations/new-location/${params.id}`
+      `/master-data-registry/carriers/new-carrier/${params.id}`
     );
   };
   const {
-    data: locationsData,
+    data: carriersData,
     isLoading,
     isError,
-  } = useQuery(["getLocations"], getLocations);
+  } = useQuery(["getCarriers"], getCarriers);
 
   function GetLocationCategoryName (params) {
     const productCategoryId = params.value;
@@ -90,9 +90,9 @@ const LocationsDataTable = () => {
             mr={2}
             variant="contained"
             color="custom_black"
-            onClick={() => navigate("/master-data-registry/locations/new-location")}
+            onClick={() => navigate("/master-data-registry/carriers/new-carrier")}
           >
-            ADD NEW LOCATION
+            ADD NEW CARRIER
           </Button>
         </ThemeProvider>
       </CardContent>
@@ -103,7 +103,7 @@ const LocationsDataTable = () => {
             columns={[
               {
                 field: "name",
-                headerName: "Location Name",
+                headerName: "Carrier Name",
                 editable: false,
                 flex: 1,
               },
@@ -149,7 +149,7 @@ const LocationsDataTable = () => {
                       onClose={handleClose}
                     >
                       <MenuItem
-                        onClick={() => handleEditLocation(params)}
+                        onClick={() => handleEditCarrier(params)}
                         disableRipple
                       >
                         <EditIcon />
@@ -165,7 +165,7 @@ const LocationsDataTable = () => {
                 ),
               },
             ]}
-            rows={isLoading || isError ? [] : locationsData ? locationsData.data : []}
+            rows={isLoading || isError ? [] : carriersData ? carriersData.data : []}
             components={{ Toolbar: GridToolbar }}
           />
         </div>
@@ -173,4 +173,4 @@ const LocationsDataTable = () => {
     </Card>
   );
 };
-export default LocationsDataTable;
+export default CarriersDataTable;
