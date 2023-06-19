@@ -15,10 +15,15 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {useQuery} from "@tanstack/react-query";
-import {getLocations} from "../../../api/location";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {deleteLocationById, getLocations} from "../../../api/location";
 import {getCategoryById} from "../../../api/category";
 import {getUnitById} from "../../../api/unit";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -41,6 +46,9 @@ const LocationsDataTable = () => {
   const [filterModel, setFilterModel] = useState({
     items: [],
   });
+  const [isDeleteModalOpen, setOpenDeleteModal] = useState(false);
+  const [id, setId] = useState();
+  const queryClient = useQueryClient();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -59,7 +67,11 @@ const LocationsDataTable = () => {
     isLoading,
     isError,
   } = useQuery(["getLocations"], getLocations);
-
+  const { refetch } = useQuery(
+    ["deleteLocationById", id],
+    deleteLocationById,
+    { enabled: false }
+  );
   function GetLocationCategoryName (params) {
     const productCategoryId = params.value;
     const result = useQuery(
@@ -80,6 +92,22 @@ const LocationsDataTable = () => {
     if (result && result.data) {
       return result.data.data.name;
     }
+  }
+
+  const handleDeleteLocation = async () => {
+    await refetch();
+    setOpenDeleteModal(false);
+    await queryClient.invalidateQueries(["getLocations"]);
+  };
+
+  function handleOpenDeleteModal(id) {
+    setId(id);
+    setOpenDeleteModal(true);
+    handleClose();
+  }
+
+  function handleCloseModal() {
+    setOpenDeleteModal(false);
   }
 
   return (
@@ -156,7 +184,10 @@ const LocationsDataTable = () => {
                         Edit
                       </MenuItem>
                       <Divider />
-                      <MenuItem>
+                      <MenuItem
+                        onClick={() => handleOpenDeleteModal(params.id)}
+                        disableRipple
+                      >
                         <DeleteIcon />
                         Delete
                       </MenuItem>
@@ -169,6 +200,32 @@ const LocationsDataTable = () => {
             components={{ Toolbar: GridToolbar }}
           />
         </div>
+        <Dialog
+          open={isDeleteModalOpen}
+          onClose={handleCloseModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Delete Location
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete Location?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleDeleteLocation}
+              color="primary"
+            >
+              Yes
+            </Button>
+            <Button onClick={handleCloseModal} color="error" autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
     </Card>
   );

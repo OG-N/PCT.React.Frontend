@@ -15,8 +15,13 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {useQuery} from "@tanstack/react-query";
-import {getVendors} from "../../../api/vendor";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {deleteVendorById, getVendors} from "../../../api/vendor";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -34,11 +39,14 @@ const themeCustom = createTheme({
 
 const VendorsDataTable = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const navigate = useNavigate();
   const [filterModel, setFilterModel] = useState({
     items: [],
   });
+  const [isDeleteModalOpen, setOpenDeleteModal] = useState(false);
+  const [id, setId] = useState();
+  const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -57,6 +65,26 @@ const VendorsDataTable = () => {
     isLoading,
     isError,
   } = useQuery(["getVendors"], getVendors);
+  const { refetch } = useQuery(
+    ["deleteVendorById", id],
+    deleteVendorById,
+    { enabled: false }
+  );
+  const handleDeleteVendor = async () => {
+    await refetch();
+    setOpenDeleteModal(false);
+    await queryClient.invalidateQueries(["getVendors"]);
+  };
+
+  function handleOpenDeleteModal(id) {
+    setId(id);
+    setOpenDeleteModal(true);
+    handleClose();
+  }
+
+  function handleCloseModal() {
+    setOpenDeleteModal(false);
+  }
 
   return (
     <Card mb={6}>
@@ -118,7 +146,10 @@ const VendorsDataTable = () => {
                         Edit
                       </MenuItem>
                       <Divider />
-                      <MenuItem>
+                      <MenuItem
+                        onClick={() => handleOpenDeleteModal(params.id)}
+                        disableRipple
+                      >
                         <DeleteIcon />
                         Delete
                       </MenuItem>
@@ -131,6 +162,32 @@ const VendorsDataTable = () => {
             components={{ Toolbar: GridToolbar }}
           />
         </div>
+        <Dialog
+          open={isDeleteModalOpen}
+          onClose={handleCloseModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Delete Vendor
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete Vendor?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleDeleteVendor}
+              color="primary"
+            >
+              Yes
+            </Button>
+            <Button onClick={handleCloseModal} color="error" autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
     </Card>
   );

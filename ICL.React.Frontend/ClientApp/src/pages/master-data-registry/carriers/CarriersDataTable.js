@@ -18,13 +18,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {getCategoryById} from "../../../api/category";
 import {getUnitById} from "../../../api/unit";
-import {getCarriers} from "../../../api/carrier";
+import {deleteCarrierById, getCarriers} from "../../../api/carrier";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {deleteVendorById} from "../../../api/vendor";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -41,19 +40,19 @@ const themeCustom = createTheme({
 });
 
 const CarriersDataTable = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [filterModel, setFilterModel] = useState({
     items: [],
   });
-  const [isDeleteModalOpen, setOpenDeleteModal] = React.useState(false);
-  const [id, setId] = React.useState();
+  const [isDeleteModalOpen, setOpenDeleteModal] = useState(false);
+  const [id, setId] = useState();
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const { refetch } = useQuery(
-    ["deleteVendorById", id],
-    deleteVendorById,
+    ["deleteCarrierById", id],
+    deleteCarrierById,
     { enabled: false }
   );
   const handleClick = (event) => {
@@ -187,6 +186,7 @@ const CarriersDataTable = () => {
                       <Divider />
                       <MenuItem
                         onClick={() => handleOpenDeleteModal(params.id)}
+                        disableRipple
                       >
                         <DeleteIcon />
                         Delete
@@ -207,11 +207,11 @@ const CarriersDataTable = () => {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            Delete Vendor
+            Delete Carrier
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Are you sure you want to delete Vendor?
+              Are you sure you want to delete Carrier?
             </DialogContentText>
           </DialogContent>
           <DialogActions>

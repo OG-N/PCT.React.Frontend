@@ -15,10 +15,15 @@ import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "react-toastify";
-import {useQuery} from "@tanstack/react-query";
-import {getProducts} from "../../../api/product";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {deleteProductById, getProducts} from "../../../api/product";
 import {getCategoryById} from "../../../api/category";
 import {getUnitById} from "../../../api/unit";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -45,6 +50,9 @@ const ProductsDataTable = () => {
   const [filterModel, setFilterModel] = useState({
     items: [],
   });
+  const [isDeleteModalOpen, setOpenDeleteModal] = useState(false);
+  const [id, setId] = useState();
+  const queryClient = useQueryClient();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,7 +74,11 @@ const ProductsDataTable = () => {
     isError,
     error
   } = useQuery(["getProducts"], getProducts);
-
+  const { refetch } = useQuery(
+    ["deleteProductById", id],
+    deleteProductById,
+    { enabled: false }
+  );
   function GetProductCategoryName(params) {
     const productCategoryId = params.value;
     const result = useQuery(
@@ -106,6 +118,22 @@ const ProductsDataTable = () => {
     toast(error.response.data, {
       type: "error",
     });
+  }
+
+  const handleDeleteProduct = async () => {
+    await refetch();
+    setOpenDeleteModal(false);
+    await queryClient.invalidateQueries(["getProducts"]);
+  };
+
+  function handleOpenDeleteModal(id) {
+    setId(id);
+    setOpenDeleteModal(true);
+    handleClose();
+  }
+
+  function handleCloseModal() {
+    setOpenDeleteModal(false);
   }
 
   return (
@@ -209,7 +237,10 @@ const ProductsDataTable = () => {
                         Edit
                       </MenuItem>
                       <Divider />
-                      <MenuItem>
+                      <MenuItem
+                        onClick={() => handleOpenDeleteModal(params.id)}
+                        disableRipple
+                      >
                         <DeleteIcon />
                         Delete
                       </MenuItem>
@@ -222,6 +253,32 @@ const ProductsDataTable = () => {
             components={{ Toolbar: GridToolbar }}
           />
         </div>
+        <Dialog
+          open={isDeleteModalOpen}
+          onClose={handleCloseModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Delete Product
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete Product?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleDeleteProduct}
+              color="primary"
+            >
+              Yes
+            </Button>
+            <Button onClick={handleCloseModal} color="error" autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
     </Card>
   );
