@@ -109,6 +109,10 @@ const Navbar = ({ onDrawerToggle }) => {
                   navigate("/master-data-registry/units");
                   handleClose();
                 }}>Units</MenuItem>
+                <MenuItem onClick={() => {
+                  navigate("/master-data-registry/categories");
+                  handleClose();
+                }}>Category</MenuItem>
                 <MenuItem onClick={handleClose}>MDR Quality</MenuItem>
                 <MenuItem onClick={handleClose}>Governance</MenuItem>
                 <MenuItem onClick={handleClose}>Master Data Configuration</MenuItem>

@@ -141,6 +141,8 @@ const MasterDataRegistryTransport = async(() => import("./pages/master-data-regi
 const Carriers = async(() => import("./pages/master-data-registry/carriers/index"));
 const Unit = async(() => import("./pages/master-data-registry/unit/index"));
 const NewUnit = async(() => import("./pages/master-data-registry/unit/NewUnit"));
+const Category = async(() => import("./pages/master-data-registry/category/index"));
+const NewCategory = async(() => import("./pages/master-data-registry/category/NewCategory"));
 
 const routes = [
   {
@@ -586,6 +588,18 @@ const routes = [
       {
         path: "units/new-unit/:id",
         element: <NewUnit />,
+      },
+      {
+        path: "categories",
+        element: <Category />,
+      },
+      {
+        path: "categories/new-category",
+        element: <NewCategory />,
+      },
+      {
+        path: "categories/new-category/:id",
+        element: <NewCategory />,
       },
     ],
   },

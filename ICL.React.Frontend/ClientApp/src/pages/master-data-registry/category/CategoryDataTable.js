@@ -16,8 +16,8 @@ import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useQuery} from "@tanstack/react-query";
-import {getUnits} from "../../../api/unit";
 import {toast} from "react-toastify";
+import {getCategories} from "../../../api/category";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -33,7 +33,7 @@ const themeCustom = createTheme({
   },
 });
 
-const UnitsDataTable = () => {
+const CategoryDataTable = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -49,18 +49,18 @@ const UnitsDataTable = () => {
     setAnchorEl(null);
   };
 
-  const handleEditUnit = (params) => {
+  const handleEditCategory = (params) => {
     navigate(
-      `/master-data-registry/units/new-unit/${params.id}`
+      `/master-data-registry/categories/new-category/${params.id}`
     );
   };
 
   const {
-    data: unitsData,
+    data: categoriesData,
     isLoading,
     isError,
     error
-  } = useQuery(["getUnits"], getUnits);
+  } = useQuery(["getCategories"], getCategories);
 
   if (isLoading) {
     return "Loading....";
@@ -80,9 +80,9 @@ const UnitsDataTable = () => {
             mr={2}
             variant="contained"
             color="custom_black"
-            onClick={() => navigate("/master-data-registry/units/new-unit")}
+            onClick={() => navigate("/master-data-registry/categories/new-category")}
           >
-            ADD NEW UNIT
+            ADD NEW CATEGORY
           </Button>
         </ThemeProvider>
       </CardContent>
@@ -93,13 +93,13 @@ const UnitsDataTable = () => {
             columns={[
               {
                 field: "name",
-                headerName: "Unit Name",
+                headerName: "Category Name",
                 editable: false,
                 flex: 1,
               },
               {
                 field: "description",
-                headerName: "Unit Description",
+                headerName: "Category Description",
                 editable: false,
                 flex: 1,
               },
@@ -125,7 +125,7 @@ const UnitsDataTable = () => {
                       onClose={handleClose}
                     >
                       <MenuItem
-                        onClick={() => handleEditUnit(params)}
+                        onClick={() => handleEditCategory(params)}
                         disableRipple
                       >
                         <EditIcon />
@@ -141,7 +141,7 @@ const UnitsDataTable = () => {
                 ),
               },
             ]}
-            rows={isLoading || isError ? [] : unitsData ? unitsData.data : []}
+            rows={isLoading || isError ? [] : categoriesData ? categoriesData.data : []}
             components={{ Toolbar: GridToolbar }}
           />
         </div>
@@ -149,4 +149,4 @@ const UnitsDataTable = () => {
     </Card>
   );
 };
-export default UnitsDataTable;
+export default CategoryDataTable;
