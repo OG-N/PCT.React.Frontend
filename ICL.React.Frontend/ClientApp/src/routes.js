@@ -570,6 +570,10 @@ const routes = [
         element: <NewLocation />,
       },
       {
+        path: "locations/new-location/:id",
+        element: <NewLocation />,
+      },
+      {
         path: "transport",
         element: <MasterDataRegistryTransport />,
       },

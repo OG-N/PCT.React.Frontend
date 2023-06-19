@@ -16,6 +16,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {useQuery} from "@tanstack/react-query";
+import {getLocations} from "../../../api/location";
+import {getCategoryById} from "../../../api/category";
+import {getUnitById} from "../../../api/unit";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -46,6 +50,38 @@ const LocationsDataTable = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleEditLocation = (params) => {
+    navigate(
+      `/master-data-registry/locations/new-location/${params.id}`
+    );
+  };
+  const {
+    data: locationsData,
+    isLoading,
+    isError,
+  } = useQuery(["getLocations"], getLocations);
+
+  function GetLocationCategoryName (params) {
+    const productCategoryId = params.value;
+    const result = useQuery(
+      ["getCategoryById", productCategoryId],
+      getCategoryById
+    );
+    if (result && result.data) {
+      return result.data.data.name;
+    }
+  }
+
+  function GetLocationUnitName (params) {
+    const productUnitId = params.value;
+    const result = useQuery(
+      ["getUnitById", productUnitId],
+      getUnitById
+    );
+    if (result && result.data) {
+      return result.data.data.name;
+    }
+  }
 
   return (
     <Card mb={6}>
@@ -67,20 +103,34 @@ const LocationsDataTable = () => {
           <DataGrid
             columns={[
               {
-                field: "locationId",
-                headerName: "Location ID",
-                editable: false,
-                flex: 1,
-              },
-              {
-                field: "locationName",
+                field: "name",
                 headerName: "Location Name",
                 editable: false,
                 flex: 1,
               },
               {
-                field: "Action",
-                headerName: "",
+                field: "category",
+                headerName: "Category",
+                editable: false,
+                flex: 1,
+                valueGetter: GetLocationCategoryName,
+              },
+              {
+                field: "unit",
+                headerName: "Units",
+                editable: false,
+                flex: 1,
+                valueGetter: GetLocationUnitName,
+              },
+              {
+                field: "description",
+                headerName: "Description",
+                editable: false,
+                flex: 1,
+              },
+              {
+                field: "action",
+                headerName: "Action",
                 sortable: false,
                 flex: 1,
                 renderCell: (params) => (
@@ -99,7 +149,10 @@ const LocationsDataTable = () => {
                       open={open}
                       onClose={handleClose}
                     >
-                      <MenuItem>
+                      <MenuItem
+                        onClick={() => handleEditLocation(params)}
+                        disableRipple
+                      >
                         <EditIcon />
                         Edit
                       </MenuItem>
@@ -113,13 +166,7 @@ const LocationsDataTable = () => {
                 ),
               },
             ]}
-            rows={[
-              {
-                id: 1,
-                locationId: "XXX1",
-                locationName: "Nairobi Kenya",
-              }
-            ]}
+            rows={isLoading || isError ? [] : locationsData ? locationsData.data : []}
             components={{ Toolbar: GridToolbar }}
           />
         </div>

@@ -19,6 +19,8 @@ import MenuItem from "@mui/material/MenuItem";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {getProductById, newProduct, updateProduct} from "../../../api/product";
 import { toast } from "react-toastify";
+import {getCategories} from "../../../api/category";
+import {getUnits} from "../../../api/unit";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -51,6 +53,16 @@ const NewProduct = () => {
   } = useQuery(["getProductById", id], getProductById, {
     enabled: !!id,
   });
+  const {
+    data: ProductCategories,
+    isLoading: isLoadingProductCategories,
+    isError: isErrorProductCategories,
+  } = useQuery(["getCategories"], getCategories);
+  const {
+    data: ProductUnits,
+    isLoading: isLoadingProductUnits,
+    isError: isErrorProductUnits,
+  } = useQuery(["getUnits"], getUnits);
 
   const formik = useFormik({
     initialValues: {
@@ -161,13 +173,13 @@ const NewProduct = () => {
                       <MenuItem disabled value="">
                         Select Product Category
                       </MenuItem>
-                      {/*{!isLoadingProductCategories && !isErrorProductCategories*/}
-                      {/*  ? ProductCategories.data.map((option) => (*/}
-                      {/*    <MenuItem key={option.id} value={option.id}>*/}
-                      {/*      {option.name}*/}
-                      {/*    </MenuItem>*/}
-                      {/*  ))*/}
-                      {/*  : []}*/}
+                      {!isLoadingProductCategories && !isErrorProductCategories
+                        ? ProductCategories.data.map((option) => (
+                          <MenuItem key={option.id} value={option.id}>
+                            {option.name}
+                          </MenuItem>
+                        ))
+                        : []}
                     </TextField>
                   </Grid>
 
@@ -192,13 +204,13 @@ const NewProduct = () => {
                       <MenuItem disabled value="">
                         Select Product Unit
                       </MenuItem>
-                      {/*{!isLoadingProductUnits && !isErrorProductUnits*/}
-                      {/*  ? ProductUnits.data.map((option) => (*/}
-                      {/*    <MenuItem key={option.id} value={option.id}>*/}
-                      {/*      {option.name}*/}
-                      {/*    </MenuItem>*/}
-                      {/*  ))*/}
-                      {/*  : []}*/}
+                      {!isLoadingProductUnits && !isErrorProductUnits
+                        ? ProductUnits.data.map((option) => (
+                          <MenuItem key={option.id} value={option.id}>
+                            {option.name}
+                          </MenuItem>
+                        ))
+                        : []}
                     </TextField>
                   </Grid>
 

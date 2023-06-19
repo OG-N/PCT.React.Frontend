@@ -19,6 +19,8 @@ import {useMutation, useQuery} from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import {getLocationById, newLocation, updateLocation} from "../../../api/location";
 import MenuItem from "@mui/material/MenuItem";
+import {getCategories} from "../../../api/category";
+import {getUnits} from "../../../api/unit";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -49,6 +51,16 @@ const NewLocation = () => {
   } = useQuery(["getLocationById", id], getLocationById, {
     enabled: !!id,
   });
+  const {
+    data: categories,
+    isLoading: isLoadingCategories,
+    isError: isErrorCategories,
+  } = useQuery(["getCategories"], getCategories);
+  const {
+    data: units,
+    isLoading: isLoadingUnits,
+    isError: isErrorUnits,
+  } = useQuery(["getUnits"], getUnits);
   const mutation = useMutation({ mutationFn: newLocation });
   const updateMutation = useMutation({ mutationFn: updateLocation });
 
@@ -56,12 +68,16 @@ const NewLocation = () => {
     initialValues: {
       name: "",
       description: "",
+      category: "",
+      unit: "",
+      country: "",
     },
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Required"),
       description: Yup.string().required("Required"),
       category: Yup.string().required("Required"),
       unit: Yup.string().required("Required"),
+      country: Yup.string().required("Required"),
     }),
     onSubmit: async (values, { resetForm,  setSubmitting }) => {
       try {
@@ -89,6 +105,9 @@ const NewLocation = () => {
         formik.setValues({
           name: data.data.name,
           description: data.data.description ? data.data.description : "",
+          category: data.data.category,
+          unit: data.data.unit,
+          country: data.data.country,
         });
       }
     }
@@ -138,8 +157,27 @@ const NewLocation = () => {
 
                   <Grid item md={6}>
                     <TextField
+                      name="country"
+                      label="Country"
+                      value={formik.values.country}
+                      error={Boolean(
+                        formik.touched.country && formik.errors.country
+                      )}
+                      fullWidth
+                      helperText={
+                        formik.touched.country && formik.errors.country
+                      }
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      variant="outlined"
+                      my={2}
+                    />
+                  </Grid>
+
+                  <Grid item md={6}>
+                    <TextField
                       name="category"
-                      label="Product Category"
+                      label="Category"
                       select
                       value={formik.values.category}
                       error={Boolean(
@@ -157,20 +195,20 @@ const NewLocation = () => {
                       <MenuItem disabled value="">
                         Select Product Category
                       </MenuItem>
-                      {/*{!isLoadingProductCategories && !isErrorProductCategories*/}
-                      {/*  ? ProductCategories.data.map((option) => (*/}
-                      {/*    <MenuItem key={option.id} value={option.id}>*/}
-                      {/*      {option.name}*/}
-                      {/*    </MenuItem>*/}
-                      {/*  ))*/}
-                      {/*  : []}*/}
+                      {!isLoadingCategories && !isErrorCategories
+                        ? categories.data.map((option) => (
+                          <MenuItem key={option.id} value={option.id}>
+                            {option.name}
+                          </MenuItem>
+                        ))
+                        : []}
                     </TextField>
                   </Grid>
 
                   <Grid item md={6}>
                     <TextField
                       name="unit"
-                      label="Product Unit"
+                      label="Unit"
                       select
                       value={formik.values.unit}
                       error={Boolean(
@@ -188,13 +226,13 @@ const NewLocation = () => {
                       <MenuItem disabled value="">
                         Select Product Unit
                       </MenuItem>
-                      {/*{!isLoadingProductUnits && !isErrorProductUnits*/}
-                      {/*  ? ProductUnits.data.map((option) => (*/}
-                      {/*    <MenuItem key={option.id} value={option.id}>*/}
-                      {/*      {option.name}*/}
-                      {/*    </MenuItem>*/}
-                      {/*  ))*/}
-                      {/*  : []}*/}
+                      {!isLoadingUnits && !isErrorUnits
+                        ? units.data.map((option) => (
+                          <MenuItem key={option.id} value={option.id}>
+                            {option.name}
+                          </MenuItem>
+                        ))
+                        : []}
                     </TextField>
                   </Grid>
                 </Grid>

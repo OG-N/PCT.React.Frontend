@@ -19,4 +19,5 @@ export const apiRoutes = {
   product: `${process.env.REACT_APP_PCT_BACKEND}/api/Product`,
   unit: `${process.env.REACT_APP_PCT_BACKEND}/api/Unit`,
   category: `${process.env.REACT_APP_PCT_BACKEND}/api/Category`,
+  location: `${process.env.REACT_APP_PCT_BACKEND}/api/Location`,
 };
