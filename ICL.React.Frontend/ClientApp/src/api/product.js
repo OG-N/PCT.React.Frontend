@@ -8,3 +8,12 @@ export const newProduct = async (values) => {
 export const getProducts = async () => {
   return await axios.get(`${apiRoutes.product}`);
 };
+
+export const getProductById = async ({ queryKey }) => {
+  const [, id] = queryKey;
+  return await axios.get(`${apiRoutes.product}/${id}`);
+};
+
+export const updateProduct = async (values) => {
+  return await axios.put(`${apiRoutes.product}`, values);
+};

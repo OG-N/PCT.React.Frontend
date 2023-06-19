@@ -136,11 +136,11 @@ const MasterDataRegistry = async(() => import("./pages/master-data-registry/inde
 const Locations = async(() => import("./pages/master-data-registry/locations/index"));
 const NewProduct = async(() => import("./pages/master-data-registry/products/NewProduct"));
 const MasterDataRegistryProducts = async(() => import("./pages/master-data-registry/products"));
-const NewProductUnit = async(() => import("./pages/master-data-registry/products/product-units/NewProductUnit"));
-const NewProductCategory = async(() => import("./pages/master-data-registry/products/product-category/NewProductCategory"));
 const NewLocation = async(() => import("./pages/master-data-registry/locations/NewLocation"));
 const MasterDataRegistryTransport = async(() => import("./pages/master-data-registry/transport/index"));
 const Carriers = async(() => import("./pages/master-data-registry/carriers/index"));
+const Unit = async(() => import("./pages/master-data-registry/unit/index"));
+const NewUnit = async(() => import("./pages/master-data-registry/unit/NewUnit"));
 
 const routes = [
   {
@@ -560,22 +560,6 @@ const routes = [
         element: <NewProduct />,
       },
       {
-        path: "products/product-units/new-product-unit",
-        element: <NewProductUnit />,
-      },
-      {
-        path: "products/product-units/new-product-unit/:id",
-        element: <NewProductUnit />,
-      },
-      {
-        path: "products/product-category/new-product-category",
-        element: <NewProductCategory />,
-      },
-      {
-        path: "products/product-category/new-product-category/:id",
-        element: <NewProductCategory />,
-      },
-      {
         path: "locations",
         element: <Locations />,
       },
@@ -590,6 +574,18 @@ const routes = [
       {
         path: "carriers",
         element: <Carriers />,
+      },
+      {
+        path: "units",
+        element: <Unit />
+      },
+      {
+        path: "units/new-unit",
+        element: <NewUnit />,
+      },
+      {
+        path: "units/new-unit/:id",
+        element: <NewUnit />,
       },
     ],
   },

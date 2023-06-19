@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "@emotion/styled";
 import {
   Box,
@@ -12,12 +12,12 @@ import {
 } from "@mui/material";
 import {spacing} from "@mui/system";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import {newProductCategory} from "../../../../api/product-category";
+import {getUnitById, newUnit, updateUnit} from "../../../api/unit";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -37,9 +37,19 @@ const themeCustom = createTheme({
   },
 });
 
-const NewProductCategory = () => {
+const NewUnit = () => {
   const navigate = useNavigate();
-  const mutation = useMutation({ mutationFn: newProductCategory });
+  let { id } = useParams();
+
+  const {
+    data,
+    isLoading,
+    isError
+  } = useQuery(["getUnitById", id], getUnitById, {
+    enabled: !!id,
+  });
+  const mutation = useMutation({ mutationFn: newUnit });
+  const updateMutation = useMutation({ mutationFn: updateUnit });
 
   const formik = useFormik({
     initialValues: {
@@ -52,20 +62,36 @@ const NewProductCategory = () => {
     }),
     onSubmit: async (values, { resetForm,  setSubmitting }) => {
       try {
-        setSubmitting(true);
-        await mutation.mutateAsync(values);
-        toast("Successfully Created a Product Category", {
+        if (id) {
+          values.id = id;
+          await updateMutation.mutateAsync(values);
+        } else {
+          await mutation.mutateAsync(values);
+        }
+        toast("Successfully Created an Unit", {
           type: "success",
         });
-        resetForm();
-        navigate("/master-data-registry/products");
+        navigate("/master-data-registry/units");
       } catch (error) {
         toast(error.response.data, {
           type: "error",
         });
       }
     }
-  })
+  });
+
+  useEffect(() => {
+    function setCurrentFormValues() {
+      if (!isLoading && !isError) {
+        formik.setValues({
+          name: data.data.name,
+          description: data.data.description ? data.data.description : "",
+        });
+      }
+    }
+    setCurrentFormValues();
+  }, [isLoading, isError, data]);
+
   return (
     <React.Fragment>
       <form onSubmit={formik.handleSubmit}>
@@ -83,7 +109,7 @@ const NewProductCategory = () => {
                       Master Data Registry
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      New Product Category
+                      New Unit
                     </Typography>
                   </Grid>
                 </Grid>
@@ -91,7 +117,7 @@ const NewProductCategory = () => {
                   <Grid item md={6}>
                     <TextField
                       name="name"
-                      label="Product Category Name"
+                      label="Name"
                       value={formik.values.name}
                       error={Boolean(
                         formik.touched.name && formik.errors.name
@@ -131,11 +157,11 @@ const NewProductCategory = () => {
                 </Grid>
                 <Stack direction="row" spacing={2}>
                   <ThemeProvider theme={themeCustom}>
-                    <Button type="submit" variant="contained" color="custom_black" onClick={() => navigate("/master-data-registry/products")}>
+                    <Button type="submit" variant="contained" color="custom_black" onClick={() => navigate("/master-data-registry/units")}>
                       Cancel
                     </Button>
                     <Button type="submit" variant="contained" color="custom_green">
-                      Save New Product Category
+                      Save New Unit
                     </Button>
                   </ThemeProvider>
                 </Stack>
@@ -147,4 +173,4 @@ const NewProductCategory = () => {
     </React.Fragment>
   );
 };
-export default NewProductCategory;
+export default NewUnit;

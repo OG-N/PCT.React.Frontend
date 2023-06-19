@@ -17,8 +17,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "react-toastify";
 import {useQuery} from "@tanstack/react-query";
 import {getProducts} from "../../../api/product";
-import {getProductCategoryById} from "../../../api/product-category";
-import {getProductUnitById} from "../../../api/product-unit";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -69,24 +67,24 @@ const ProductsDataTable = () => {
 
   function GetProductCategoryName(params) {
     const productCategoryId = params.value;
-    const result = useQuery(
-      ["getProductCategoryById", productCategoryId],
-      getProductCategoryById
-    );
-    if (result && result.data) {
-      return result.data.data.name;
-    }
+    // const result = useQuery(
+    //   ["getProductCategoryById", productCategoryId],
+    //   getProductCategoryById
+    // );
+    // if (result && result.data) {
+    //   return result.data.data.name;
+    // }
   }
 
   function GetProductUnitName(params) {
     const productUnitId = params.value;
-    const result = useQuery(
-      ["getProductUnitById", productUnitId],
-      getProductUnitById
-    );
-    if (result && result.data) {
-      return result.data.data.name;
-    }
+    // const result = useQuery(
+    //   ["getProductUnitById", productUnitId],
+    //   getProductUnitById
+    // );
+    // if (result && result.data) {
+    //   return result.data.data.name;
+    // }
   }
 
   function GetProductStatus(params) {

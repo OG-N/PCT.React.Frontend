@@ -1,21 +1,24 @@
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
 import styled from "@emotion/styled";
 import {
   Button as MuiButton,
   Card as MuiCard,
-  CardContent as MuiCardContent, Divider, Paper as MuiPaper, Tooltip,
+  CardContent as MuiCardContent, Divider,
+  Paper as MuiPaper,
+  Tooltip
 } from "@mui/material";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {spacing} from "@mui/system";
-import {DataGrid, GridToolbar} from "@mui/x-data-grid";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
+import {useNavigate} from "react-router-dom";
+import {DataGrid, GridToolbar} from "@mui/x-data-grid";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useQuery} from "@tanstack/react-query";
-import {getProductUnits} from "../../../../api/product-unit";
+import {getUnits} from "../../../api/unit";
+import {toast} from "react-toastify";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -31,7 +34,7 @@ const themeCustom = createTheme({
   },
 });
 
-const ProductUnitsDataTable = () => {
+const UnitsDataTable = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -47,17 +50,28 @@ const ProductUnitsDataTable = () => {
     setAnchorEl(null);
   };
 
-  const handleEditProductUnit = (params) => {
+  const handleEditUnit = (params) => {
     navigate(
-      `/master-data-registry/products/product-units/new-product-unit/${params.id}`
+      `/master-data-registry/units/new-unit/${params.id}`
     );
   };
 
   const {
-    data: ProductUnits,
-    isLoading: isLoadingProductUnits,
-    isError: isErrorProductUnits,
-  } = useQuery(["getProductUnits"], getProductUnits);
+    data: unitsData,
+    isLoading,
+    isError,
+    error
+  } = useQuery(["getUnits"], getUnits);
+
+  if (isLoading) {
+    return "Loading....";
+  }
+
+  if (isError) {
+    toast(error.response.data, {
+      type: "error",
+    });
+  }
 
   return (
     <Card mb={6}>
@@ -67,9 +81,9 @@ const ProductUnitsDataTable = () => {
             mr={2}
             variant="contained"
             color="custom_black"
-            onClick={() => navigate("/master-data-registry/products/product-units/new-product-unit")}
+            onClick={() => navigate("/master-data-registry/units/new-unit")}
           >
-            ADD PRODUCT UNIT
+            ADD NEW UNIT
           </Button>
         </ThemeProvider>
       </CardContent>
@@ -80,13 +94,13 @@ const ProductUnitsDataTable = () => {
             columns={[
               {
                 field: "name",
-                headerName: "Product Unit Name",
+                headerName: "Unit Name",
                 editable: false,
                 flex: 1,
               },
               {
                 field: "description",
-                headerName: "Product Unit Description",
+                headerName: "Unit Description",
                 editable: false,
                 flex: 1,
               },
@@ -112,8 +126,7 @@ const ProductUnitsDataTable = () => {
                       onClose={handleClose}
                     >
                       <MenuItem
-                        onClick={() => handleEditProductUnit(params)}
-                        sx={{ color: "#014d88", fontWeight: "bolder" }}
+                        onClick={() => handleEditUnit(params)}
                         disableRipple
                       >
                         <EditIcon />
@@ -129,7 +142,7 @@ const ProductUnitsDataTable = () => {
                 ),
               },
             ]}
-            rows={isLoadingProductUnits || isErrorProductUnits ? [] : ProductUnits ? ProductUnits.data : []}
+            rows={isLoading || isError ? [] : unitsData ? unitsData.data : []}
             components={{ Toolbar: GridToolbar }}
           />
         </div>
@@ -137,4 +150,4 @@ const ProductUnitsDataTable = () => {
     </Card>
   );
 };
-export default ProductUnitsDataTable;
+export default UnitsDataTable;

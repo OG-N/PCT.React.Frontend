@@ -17,6 +17,6 @@ export const apiRoutes = {
   cmscontentimpactbyname:`${process.env.REACT_APP_DWH_BACKEND}/api/CMSContentImpact/contentByName`,
   cmscontentleadershipbyname:`${process.env.REACT_APP_DWH_BACKEND}/api/CMSContentLeadership/contentByName`,
   product: `${process.env.REACT_APP_PCT_BACKEND}/api/Product`,
-  productCategory: `${process.env.REACT_APP_PCT_BACKEND}/api/ProductCategory`,
-  productUnit: `${process.env.REACT_APP_PCT_BACKEND}/api/ProductUnit`,
+  unit: `${process.env.REACT_APP_PCT_BACKEND}/api/Unit`,
+  category: `${process.env.REACT_APP_PCT_BACKEND}/api/Category`,
 };

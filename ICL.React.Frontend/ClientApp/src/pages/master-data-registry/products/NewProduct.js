@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "@emotion/styled";
 import {
   Box,
@@ -12,15 +12,13 @@ import {
 } from "@mui/material";
 import {spacing} from "@mui/system";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import MenuItem from "@mui/material/MenuItem";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {newProduct} from "../../../api/product";
+import {getProductById, newProduct, updateProduct} from "../../../api/product";
 import { toast } from "react-toastify";
-import {getProductUnits} from "../../../api/product-unit";
-import {getProductCategories} from "../../../api/product-category";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -42,18 +40,18 @@ const themeCustom = createTheme({
 
 const NewProduct = () => {
   const navigate = useNavigate();
+  let { id } = useParams();
   const mutation = useMutation({ mutationFn: newProduct });
+  const updateMutation = useMutation({ mutationFn: updateProduct });
 
   const {
-    data: ProductUnits,
-    isLoading: isLoadingProductUnits,
-    isError: isErrorProductUnits,
-  } = useQuery(["getProductUnits"], getProductUnits);
-  const {
-    data: ProductCategories,
-    isLoading: isLoadingProductCategories,
-    isError: isErrorProductCategories,
-  } = useQuery(["getProductCategories"], getProductCategories);
+    data,
+    isLoading,
+    isError,
+  } = useQuery(["getProductById", id], getProductById, {
+    enabled: !!id,
+  });
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -69,17 +67,38 @@ const NewProduct = () => {
     }),
     onSubmit: async (values, { resetForm,  setSubmitting }) => {
       try {
-        await mutation.mutateAsync(values);
+        if (id) {
+          values.id = id;
+          await updateMutation.mutateAsync(values);
+        } else {
+          await mutation.mutateAsync(values);
+        }
         toast("Successfully Created a Product", {
           type: "success",
         });
+        navigate("/master-data-registry/products");
       } catch (error) {
         toast(error.response.data, {
           type: "error",
         });
       }
     }
-  })
+  });
+
+  useEffect(() => {
+    function setCurrentFormValues() {
+      if (!isLoading && !isError) {
+        formik.setValues({
+          name: data.data.name,
+          category: data.data.category,
+          unit: data.data.unit,
+          description: data.data.description ? data.data.description : "",
+        });
+      }
+    }
+    setCurrentFormValues();
+  }, [isLoading, isError, data]);
+
   return (
     <React.Fragment>
       <form onSubmit={formik.handleSubmit}>
@@ -142,13 +161,13 @@ const NewProduct = () => {
                       <MenuItem disabled value="">
                         Select Product Category
                       </MenuItem>
-                      {!isLoadingProductCategories && !isErrorProductCategories
-                        ? ProductCategories.data.map((option) => (
-                          <MenuItem key={option.id} value={option.id}>
-                            {option.name}
-                          </MenuItem>
-                        ))
-                        : []}
+                      {/*{!isLoadingProductCategories && !isErrorProductCategories*/}
+                      {/*  ? ProductCategories.data.map((option) => (*/}
+                      {/*    <MenuItem key={option.id} value={option.id}>*/}
+                      {/*      {option.name}*/}
+                      {/*    </MenuItem>*/}
+                      {/*  ))*/}
+                      {/*  : []}*/}
                     </TextField>
                   </Grid>
 
@@ -173,13 +192,13 @@ const NewProduct = () => {
                       <MenuItem disabled value="">
                         Select Product Unit
                       </MenuItem>
-                      {!isLoadingProductUnits && !isErrorProductUnits
-                        ? ProductUnits.data.map((option) => (
-                          <MenuItem key={option.id} value={option.id}>
-                            {option.name}
-                          </MenuItem>
-                        ))
-                        : []}
+                      {/*{!isLoadingProductUnits && !isErrorProductUnits*/}
+                      {/*  ? ProductUnits.data.map((option) => (*/}
+                      {/*    <MenuItem key={option.id} value={option.id}>*/}
+                      {/*      {option.name}*/}
+                      {/*    </MenuItem>*/}
+                      {/*  ))*/}
+                      {/*  : []}*/}
                     </TextField>
                   </Grid>
 

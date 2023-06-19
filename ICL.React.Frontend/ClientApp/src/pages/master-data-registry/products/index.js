@@ -3,9 +3,6 @@ import { Helmet } from "react-helmet-async";
 import {
   Box,
   Breadcrumbs as MuiBreadcrumbs,
-  Card as MuiCard,
-  CardContent as MuiCardContent,
-  Divider as MuiDivider,
   Grid,
   Link,
   Typography,
@@ -23,8 +20,6 @@ import ProductsDataTable from "./ProductsDataTable";
 import ProductOverview from "./ProductOverview";
 import ProductOccurrence from "./ProductOccurrence";
 import ProductDataQuality from "./ProductDataQuality";
-import ProductUnits from "./product-units";
-import ProductCategory from "./product-category";
 
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
@@ -63,8 +58,6 @@ const Products = () => {
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                   <Tab label="OVERVIEW" value="1" />
                   <Tab label="DATA STORE" value="2" />
-                  <Tab label="PRODUCT CATEGORY" value="3" />
-                  <Tab label="PRODUCT UNITS" value="4" />
                   <Tab label="OCCURRENCE" value="5" />
                   <Tab label="DATA QUALITY" value="6" />
                   <Tab label="RELATIONSHIPS" value="7" />
@@ -79,12 +72,6 @@ const Products = () => {
               </TabPanel>
               <TabPanel value="2">
                 <ProductsDataTable />
-              </TabPanel>
-              <TabPanel value="3">
-                <ProductCategory />
-              </TabPanel>
-              <TabPanel value="4">
-                <ProductUnits />
               </TabPanel>
               <TabPanel value="5">
                 <ProductOccurrence />

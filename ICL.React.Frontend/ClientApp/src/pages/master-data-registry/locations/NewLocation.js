@@ -18,6 +18,7 @@ import * as Yup from "yup";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import {getLocationById, newLocation, updateLocation} from "../../../api/location";
+import MenuItem from "@mui/material/MenuItem";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -59,6 +60,8 @@ const NewLocation = () => {
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Required"),
       description: Yup.string().required("Required"),
+      category: Yup.string().required("Required"),
+      unit: Yup.string().required("Required"),
     }),
     onSubmit: async (values, { resetForm,  setSubmitting }) => {
       try {
@@ -131,6 +134,68 @@ const NewLocation = () => {
                       variant="outlined"
                       my={2}
                     />
+                  </Grid>
+
+                  <Grid item md={6}>
+                    <TextField
+                      name="category"
+                      label="Product Category"
+                      select
+                      value={formik.values.category}
+                      error={Boolean(
+                        formik.touched.category && formik.errors.category
+                      )}
+                      helperText={
+                        formik.touched.category && formik.errors.category
+                      }
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      variant="outlined"
+                      fullWidth
+                      my={2}
+                    >
+                      <MenuItem disabled value="">
+                        Select Product Category
+                      </MenuItem>
+                      {/*{!isLoadingProductCategories && !isErrorProductCategories*/}
+                      {/*  ? ProductCategories.data.map((option) => (*/}
+                      {/*    <MenuItem key={option.id} value={option.id}>*/}
+                      {/*      {option.name}*/}
+                      {/*    </MenuItem>*/}
+                      {/*  ))*/}
+                      {/*  : []}*/}
+                    </TextField>
+                  </Grid>
+
+                  <Grid item md={6}>
+                    <TextField
+                      name="unit"
+                      label="Product Unit"
+                      select
+                      value={formik.values.unit}
+                      error={Boolean(
+                        formik.touched.unit && formik.errors.unit
+                      )}
+                      helperText={
+                        formik.touched.unit && formik.errors.unit
+                      }
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      variant="outlined"
+                      fullWidth
+                      my={2}
+                    >
+                      <MenuItem disabled value="">
+                        Select Product Unit
+                      </MenuItem>
+                      {/*{!isLoadingProductUnits && !isErrorProductUnits*/}
+                      {/*  ? ProductUnits.data.map((option) => (*/}
+                      {/*    <MenuItem key={option.id} value={option.id}>*/}
+                      {/*      {option.name}*/}
+                      {/*    </MenuItem>*/}
+                      {/*  ))*/}
+                      {/*  : []}*/}
+                    </TextField>
                   </Grid>
                 </Grid>
                 <Grid container spacing={2} mb={2}>
