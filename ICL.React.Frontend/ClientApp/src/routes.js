@@ -137,7 +137,8 @@ const Locations = async(() => import("./pages/master-data-registry/locations/ind
 const NewProduct = async(() => import("./pages/master-data-registry/products/NewProduct"));
 const MasterDataRegistryProducts = async(() => import("./pages/master-data-registry/products"));
 const NewLocation = async(() => import("./pages/master-data-registry/locations/NewLocation"));
-const MasterDataRegistryTransport = async(() => import("./pages/master-data-registry/transport/index"));
+const Vendors = async(() => import("./pages/master-data-registry/vendors/index"));
+const NewVendor = async(() => import("./pages/master-data-registry/vendors/NewVendor"));
 const Carriers = async(() => import("./pages/master-data-registry/carriers/index"));
 const NewCarrier = async(() => import("./pages/master-data-registry/carriers/NewCarrier"));
 const Unit = async(() => import("./pages/master-data-registry/unit/index"));
@@ -575,8 +576,16 @@ const routes = [
         element: <NewLocation />,
       },
       {
-        path: "transport",
-        element: <MasterDataRegistryTransport />,
+        path: "vendors",
+        element: <Vendors />,
+      },
+      {
+        path: "vendors/new-vendor",
+        element: <NewVendor />,
+      },
+      {
+        path: "vendors/new-vendor/:id",
+        element: <NewVendor />,
       },
       {
         path: "carriers",

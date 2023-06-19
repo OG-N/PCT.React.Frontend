@@ -96,10 +96,10 @@ const Navbar = ({ onDrawerToggle }) => {
                   handleClose();
                 }}>Locations</MenuItem>
                 <MenuItem onClick={() => {
-                  navigate("/master-data-registry/transport");
+                  navigate("/master-data-registry/vendors");
                   handleClose();
                 }}>
-                  Transport
+                  Vendors
                 </MenuItem>
                 <MenuItem onClick={() => {
                   navigate("/master-data-registry/carriers");

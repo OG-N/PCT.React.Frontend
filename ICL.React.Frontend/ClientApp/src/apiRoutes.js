@@ -21,4 +21,5 @@ export const apiRoutes = {
   category: `${process.env.REACT_APP_PCT_BACKEND}/api/Category`,
   location: `${process.env.REACT_APP_PCT_BACKEND}/api/Location`,
   carrier: `${process.env.REACT_APP_PCT_BACKEND}/api/Carrier`,
+  vendor: `${process.env.REACT_APP_PCT_BACKEND}/api/Vendor`,
 };
