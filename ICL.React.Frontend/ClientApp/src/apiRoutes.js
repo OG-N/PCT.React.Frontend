@@ -16,4 +16,10 @@ export const apiRoutes = {
   cmscontentleadershipbyrol:`${process.env.REACT_APP_DWH_BACKEND}/api/CMSContentLeadership/contentByRol`,
   cmscontentimpactbyname:`${process.env.REACT_APP_DWH_BACKEND}/api/CMSContentImpact/contentByName`,
   cmscontentleadershipbyname:`${process.env.REACT_APP_DWH_BACKEND}/api/CMSContentLeadership/contentByName`,
+  product: `${process.env.REACT_APP_PCT_BACKEND}/api/Product`,
+  unit: `${process.env.REACT_APP_PCT_BACKEND}/api/Unit`,
+  category: `${process.env.REACT_APP_PCT_BACKEND}/api/Category`,
+  location: `${process.env.REACT_APP_PCT_BACKEND}/api/Location`,
+  carrier: `${process.env.REACT_APP_PCT_BACKEND}/api/Carrier`,
+  vendor: `${process.env.REACT_APP_PCT_BACKEND}/api/Vendor`,
 };
