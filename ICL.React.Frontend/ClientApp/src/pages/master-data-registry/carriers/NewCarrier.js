@@ -18,8 +18,8 @@ import * as Yup from "yup";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import MenuItem from "@mui/material/MenuItem";
-import {getCategories} from "../../../api/category";
-import {getUnits} from "../../../api/unit";
+import {getCategoryByGroupId} from "../../../api/category";
+import {getUnitsByGroup} from "../../../api/unit";
 import {getCarrierById, newCarrier, updateCarrier} from "../../../api/carrier";
 
 const Card = styled(MuiCard)(spacing);
@@ -55,12 +55,12 @@ const NewCarrier = () => {
     data: categories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
-  } = useQuery(["getCategories"], getCategories);
+  } = useQuery(["getCategoryByGroupId", 1], getCategoryByGroupId);
   const {
     data: units,
     isLoading: isLoadingUnits,
     isError: isErrorUnits,
-  } = useQuery(["getUnits"], getUnits);
+  } = useQuery(["getUnitsByGroup", 1], getUnitsByGroup);
   const mutation = useMutation({ mutationFn: newCarrier });
   const updateMutation = useMutation({ mutationFn: updateCarrier });
 
