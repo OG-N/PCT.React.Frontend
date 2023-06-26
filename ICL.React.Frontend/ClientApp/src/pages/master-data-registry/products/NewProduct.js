@@ -19,8 +19,8 @@ import MenuItem from "@mui/material/MenuItem";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {getProductById, newProduct, updateProduct} from "../../../api/product";
 import { toast } from "react-toastify";
-import {getCategories} from "../../../api/category";
-import {getUnits} from "../../../api/unit";
+import {getCategoryByGroupId} from "../../../api/category";
+import {getUnitsByGroup} from "../../../api/unit";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -57,12 +57,12 @@ const NewProduct = () => {
     data: ProductCategories,
     isLoading: isLoadingProductCategories,
     isError: isErrorProductCategories,
-  } = useQuery(["getCategories"], getCategories);
+  } = useQuery(["getCategoryByGroupId", 0], getCategoryByGroupId);
   const {
     data: ProductUnits,
     isLoading: isLoadingProductUnits,
     isError: isErrorProductUnits,
-  } = useQuery(["getUnits"], getUnits);
+  } = useQuery(["getUnitsByGroup", 0], getUnitsByGroup);
 
   const formik = useFormik({
     initialValues: {

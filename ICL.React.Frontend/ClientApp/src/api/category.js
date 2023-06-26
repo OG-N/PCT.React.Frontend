@@ -17,3 +17,8 @@ export const getCategoryById = async ({ queryKey }) => {
   const [, id] = queryKey;
   return await axios.get(`${apiRoutes.category}/${id}`);
 };
+
+export const getCategoryByGroupId = async ({ queryKey }) => {
+  const [, group] = queryKey;
+  return await axios.get(`${apiRoutes.category}/categories-by-group/${group}`);
+};

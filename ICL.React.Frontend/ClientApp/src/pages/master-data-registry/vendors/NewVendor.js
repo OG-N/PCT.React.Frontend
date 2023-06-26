@@ -17,9 +17,8 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import MenuItem from "@mui/material/MenuItem";
-import {getCategories} from "../../../api/category";
-import {getUnits} from "../../../api/unit";
+import {getCategoryByGroupId} from "../../../api/category";
+import {getUnitsByGroup} from "../../../api/unit";
 import {getVendorById, newVendor, updateVendor} from "../../../api/vendor";
 
 const Card = styled(MuiCard)(spacing);
@@ -55,12 +54,12 @@ const NewVendor = () => {
     data: categories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
-  } = useQuery(["getCategories"], getCategories);
+  } = useQuery(["getCategoryByGroupId", 3], getCategoryByGroupId);
   const {
     data: units,
     isLoading: isLoadingUnits,
     isError: isErrorUnits,
-  } = useQuery(["getUnits"], getUnits);
+  } = useQuery(["getUnitsByGroup", 3], getUnitsByGroup);
   const mutation = useMutation({ mutationFn: newVendor });
   const updateMutation = useMutation({ mutationFn: updateVendor });
 

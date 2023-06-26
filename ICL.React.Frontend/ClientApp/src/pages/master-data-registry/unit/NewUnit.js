@@ -18,6 +18,7 @@ import * as Yup from "yup";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import {getUnitById, newUnit, updateUnit} from "../../../api/unit";
+import MenuItem from "@mui/material/MenuItem";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -55,10 +56,12 @@ const NewUnit = () => {
     initialValues: {
       name: "",
       description: "",
+      group: "",
     },
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Required"),
       description: Yup.string().required("Required"),
+      group: Yup.number().required("Required"),
     }),
     onSubmit: async (values, { resetForm,  setSubmitting }) => {
       try {
@@ -86,6 +89,7 @@ const NewUnit = () => {
         formik.setValues({
           name: data.data.name,
           description: data.data.description ? data.data.description : "",
+          group: data.data.group,
         });
       }
     }
@@ -131,6 +135,43 @@ const NewUnit = () => {
                       variant="outlined"
                       my={2}
                     />
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2} mb={2}>
+                  <Grid item md={6}>
+                    <TextField
+                      name="group"
+                      label="Group"
+                      select
+                      value={formik.values.group}
+                      error={Boolean(
+                        formik.touched.group && formik.errors.group
+                      )}
+                      fullWidth
+                      helperText={
+                        formik.touched.group && formik.errors.group
+                      }
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      variant="outlined"
+                      my={2}
+                    >
+                      <MenuItem disabled value="">
+                        Select Group
+                      </MenuItem>
+                      <MenuItem key={0} value={0}>
+                        Product
+                      </MenuItem>
+                      <MenuItem key={1} value={1}>
+                        Carrier
+                      </MenuItem>
+                      <MenuItem key={2} value={2}>
+                        Location
+                      </MenuItem>
+                      <MenuItem key={3} value={3}>
+                        Vendor
+                      </MenuItem>
+                    </TextField>
                   </Grid>
                 </Grid>
                 <Grid container spacing={2} mb={2}>

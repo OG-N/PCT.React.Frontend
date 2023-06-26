@@ -17,3 +17,8 @@ export const getUnitById = async ({ queryKey }) => {
   const [, id] = queryKey;
   return await axios.get(`${apiRoutes.unit}/${id}`);
 };
+
+export const getUnitsByGroup = async ({ queryKey }) => {
+  const [, group] = queryKey;
+  return await axios.get(`${apiRoutes.unit}/units-by-group/${group}`);
+};

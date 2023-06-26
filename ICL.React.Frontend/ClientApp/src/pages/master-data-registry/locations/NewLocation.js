@@ -19,8 +19,8 @@ import {useMutation, useQuery} from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import {getLocationById, newLocation, updateLocation} from "../../../api/location";
 import MenuItem from "@mui/material/MenuItem";
-import {getCategories} from "../../../api/category";
-import {getUnits} from "../../../api/unit";
+import {getCategoryByGroupId} from "../../../api/category";
+import {getUnitsByGroup} from "../../../api/unit";
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -55,12 +55,12 @@ const NewLocation = () => {
     data: categories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
-  } = useQuery(["getCategories"], getCategories);
+  } = useQuery(["getCategoryByGroupId", 2], getCategoryByGroupId);
   const {
     data: units,
     isLoading: isLoadingUnits,
     isError: isErrorUnits,
-  } = useQuery(["getUnits"], getUnits);
+  } = useQuery(["getUnitsByGroup", 2], getUnitsByGroup);
   const mutation = useMutation({ mutationFn: newLocation });
   const updateMutation = useMutation({ mutationFn: updateLocation });
 
