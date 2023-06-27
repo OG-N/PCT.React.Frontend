@@ -22,3 +22,8 @@ export const deleteProductById = async ({ queryKey }) => {
   const [, id] = queryKey;
   return await axios.delete(`${apiRoutes.product}/${id}`);
 };
+
+export const approveProduct = async ({ queryKey }) => {
+  const [, productId] = queryKey;
+  return await axios.get(`${apiRoutes.product}/approve/${productId}`);
+};
