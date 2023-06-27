@@ -14,9 +14,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DoneIcon from '@mui/icons-material/Done';
 import { toast } from "react-toastify";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {deleteProductById, getProducts} from "../../../api/product";
+import {approveProduct, deleteProductById, getProducts} from "../../../api/product";
 import {getCategoryById} from "../../../api/category";
 import {getUnitById} from "../../../api/unit";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -51,15 +52,21 @@ const ProductsDataTable = () => {
     items: [],
   });
   const [isDeleteModalOpen, setOpenDeleteModal] = useState(false);
+  const [isApproveModalOpen, setOpenApproveModal] = useState(false);
   const [id, setId] = useState();
+  const [productId, setProductId] = useState();
+  const [approved, setApproved] = useState(false);
+  const [selectedRowId, setSelectedRowId] = React.useState(null);
   const queryClient = useQueryClient();
 
-  const handleClick = (event) => {
+  const handleClick = (event, rowId) => {
     setAnchorEl(event.currentTarget);
+    setSelectedRowId(rowId);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setSelectedRowId(null);
   };
 
   const handleEditProduct = (params) => {
@@ -79,6 +86,11 @@ const ProductsDataTable = () => {
     deleteProductById,
     { enabled: false }
   );
+  const {
+    isLoading: isLoadingApproveProduct
+  } = useQuery(["approveProduct", productId], approveProduct, {
+    enabled: !!productId && approved
+  });
   function GetProductCategoryName(params) {
     const productCategoryId = params.value;
     const result = useQuery(
@@ -102,7 +114,7 @@ const ProductsDataTable = () => {
   }
 
   function GetProductStatus(params) {
-    const productStatus = params.value;
+    const productStatus = params.row.status;
     if (productStatus == 0) {
       return "Pending";
     } else {
@@ -126,14 +138,62 @@ const ProductsDataTable = () => {
     await queryClient.invalidateQueries(["getProducts"]);
   };
 
+  const handleApproveProduct = async () => {
+    setApproved(true);
+    setOpenApproveModal(false);
+    await queryClient.invalidateQueries(["getProducts"]);
+  };
+
+  const buildMenuItems = (rowId) => {
+    const menuItems = [];
+
+    menuItems.push(
+      <MenuItem onClick={() => handleEditProduct(rowId)} disableRipple key="edit">
+        <EditIcon />
+        Edit
+      </MenuItem>
+    );
+
+    const isApproveMenuItemVisible = productsData.data.find((row) => row.id === rowId)?.status === 0;
+    if (isApproveMenuItemVisible) {
+      menuItems.push(
+        <Divider key="divider" />,
+        <MenuItem onClick={() => handleOpenApproveModal(rowId)} disableRipple key="approve">
+          <DoneIcon />
+          Approve
+        </MenuItem>
+      );
+    }
+
+    menuItems.push(
+      <Divider key="divider2" />,
+      <MenuItem onClick={() => handleOpenDeleteModal(rowId)} disableRipple key="delete">
+        <DeleteIcon />
+        Delete
+      </MenuItem>
+    );
+
+    return menuItems;
+  };
+
   function handleOpenDeleteModal(id) {
     setId(id);
     setOpenDeleteModal(true);
     handleClose();
   }
 
+  function handleOpenApproveModal(id) {
+    setProductId(id);
+    setOpenApproveModal(true);
+    handleClose();
+  }
+
   function handleCloseModal() {
     setOpenDeleteModal(false);
+  }
+
+  function handleCloseApproveModal() {
+    setOpenApproveModal(false);
   }
 
   return (
@@ -202,51 +262,43 @@ const ProductsDataTable = () => {
                 ),
               },
               {
-                field: "status",
+                field: "id",
                 headerName: "Product Status",
                 editable: false,
                 flex: 1,
                 valueGetter: GetProductStatus,
               },
               {
-                field: "action",
+                field: "status",
                 headerName: "Action",
                 sortable: false,
                 flex: 1,
-                renderCell: (params) => (
-                  <>
-                    <Button
-                      startIcon={<MoreVertIcon />}
-                      size="small"
-                      onClick={handleClick}
-                    ></Button>
-                    <Menu
-                      id="demo-customized-menu"
-                      MenuListProps={{
-                        'aria-labelledby': 'demo-customized-button',
-                      }}
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                    >
-                      <MenuItem
-                        onClick={() => handleEditProduct(params)}
-                        disableRipple
+                renderCell: (params) => {
+                  const isMenuOpen = selectedRowId === params.row.id;
+
+                  return (
+                    <div>
+                      <Button
+                        startIcon={<MoreVertIcon />}
+                        size="small"
+                        onClick={(event) => {
+                          handleClick(event, params.row.id);
+                        }}
+                      ></Button>
+                      <Menu
+                        id={`demo-customized-menu-${params.row.id}`}
+                        MenuListProps={{
+                          'aria-labelledby': `demo-customized-button-${params.row.id}`,
+                        }}
+                        anchorEl={anchorEl}
+                        open={isMenuOpen}
+                        onClose={handleClose}
                       >
-                        <EditIcon />
-                        Edit
-                      </MenuItem>
-                      <Divider />
-                      <MenuItem
-                        onClick={() => handleOpenDeleteModal(params.id)}
-                        disableRipple
-                      >
-                        <DeleteIcon />
-                        Delete
-                      </MenuItem>
-                    </Menu>
-                  </>
-                ),
+                        {buildMenuItems(params.row.id)}
+                      </Menu>
+                    </div>
+                  );
+                },
               },
             ]}
             rows={isLoading || isError ? [] : productsData ? productsData.data : []}
@@ -275,6 +327,32 @@ const ProductsDataTable = () => {
               Yes
             </Button>
             <Button onClick={handleCloseModal} color="error" autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={isApproveModalOpen}
+          onClose={handleCloseApproveModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Approve Product
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to approve the Product?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleApproveProduct}
+              color="primary"
+            >
+              Yes
+            </Button>
+            <Button onClick={handleCloseApproveModal} color="error" autoFocus>
               No
             </Button>
           </DialogActions>
