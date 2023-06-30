@@ -69,9 +69,9 @@ const ProductsDataTable = () => {
     setSelectedRowId(null);
   };
 
-  const handleEditProduct = (params) => {
+  const handleEditProduct = (rowId) => {
     navigate(
-      `/master-data-registry/products/new-product/${params.id}`
+      `/master-data-registry/products/new-product/${rowId}`
     );
   };
 
@@ -233,6 +233,12 @@ const ProductsDataTable = () => {
               {
                 field: "name",
                 headerName: "Product Name",
+                editable: false,
+                flex: 1,
+              },
+              {
+                field: "code",
+                headerName: "Product Code",
                 editable: false,
                 flex: 1,
               },
