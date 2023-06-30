@@ -41,6 +41,7 @@ const themeCustom = createTheme({
 
 const LocationsDataTable = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const [filterModel, setFilterModel] = useState({
@@ -50,16 +51,17 @@ const LocationsDataTable = () => {
   const [id, setId] = useState();
   const queryClient = useQueryClient();
 
-  const handleClick = (event) => {
+  const handleClick = (event, params) => {
     setAnchorEl(event.currentTarget);
+    setSelectedRow(params);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleEditLocation = (params) => {
+  const handleEditLocation = () => {
     navigate(
-      `/master-data-registry/locations/new-location/${params.id}`
+      `/master-data-registry/locations/new-location/${selectedRow.id}`
     );
   };
   const {
@@ -165,10 +167,10 @@ const LocationsDataTable = () => {
                     <Button
                       startIcon={<MoreVertIcon />}
                       size="small"
-                      onClick={handleClick}
+                      onClick={(event) => handleClick(event, params)}
                     ></Button>
                     <Menu
-                      id="demo-customized-menu"
+                      id={`demo-customized-menu-${params.id}`}
                       MenuListProps={{
                         'aria-labelledby': 'demo-customized-button',
                       }}
@@ -177,7 +179,7 @@ const LocationsDataTable = () => {
                       onClose={handleClose}
                     >
                       <MenuItem
-                        onClick={() => handleEditLocation(params)}
+                        onClick={handleEditLocation}
                         disableRipple
                       >
                         <EditIcon />
@@ -185,7 +187,7 @@ const LocationsDataTable = () => {
                       </MenuItem>
                       <Divider />
                       <MenuItem
-                        onClick={() => handleOpenDeleteModal(params.id)}
+                        onClick={() => handleOpenDeleteModal(selectedRow.id)}
                         disableRipple
                       >
                         <DeleteIcon />

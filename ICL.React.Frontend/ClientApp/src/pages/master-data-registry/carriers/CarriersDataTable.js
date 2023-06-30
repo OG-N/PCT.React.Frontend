@@ -41,6 +41,7 @@ const themeCustom = createTheme({
 
 const CarriersDataTable = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
   const [filterModel, setFilterModel] = useState({
     items: [],
   });
@@ -55,16 +56,17 @@ const CarriersDataTable = () => {
     deleteCarrierById,
     { enabled: false }
   );
-  const handleClick = (event) => {
+  const handleClick = (event, params) => {
     setAnchorEl(event.currentTarget);
+    setSelectedRow(params);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleEditCarrier = (params) => {
+  const handleEditCarrier = () => {
     navigate(
-      `/master-data-registry/carriers/new-carrier/${params.id}`
+      `/master-data-registry/carriers/new-carrier/${selectedRow.id}`
     );
   };
   const handleDeleteVendor = async () => {
@@ -165,7 +167,7 @@ const CarriersDataTable = () => {
                     <Button
                       startIcon={<MoreVertIcon />}
                       size="small"
-                      onClick={handleClick}
+                      onClick={(event) => handleClick(event, params)}
                     ></Button>
                     <Menu
                       id="demo-customized-menu"
@@ -177,7 +179,7 @@ const CarriersDataTable = () => {
                       onClose={handleClose}
                     >
                       <MenuItem
-                        onClick={() => handleEditCarrier(params)}
+                        onClick={handleEditCarrier}
                         disableRipple
                       >
                         <EditIcon />
@@ -185,7 +187,7 @@ const CarriersDataTable = () => {
                       </MenuItem>
                       <Divider />
                       <MenuItem
-                        onClick={() => handleOpenDeleteModal(params.id)}
+                        onClick={() => handleOpenDeleteModal(selectedRow.id)}
                         disableRipple
                       >
                         <DeleteIcon />
