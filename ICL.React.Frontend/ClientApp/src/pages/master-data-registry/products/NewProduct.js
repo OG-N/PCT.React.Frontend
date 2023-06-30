@@ -67,12 +67,14 @@ const NewProduct = () => {
   const formik = useFormik({
     initialValues: {
       name: "",
+      code: "",
       category: "",
       unit: "",
       description: "",
     },
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Required"),
+      code: Yup.string().required("Required"),
       category: Yup.string().required("Required"),
       unit: Yup.string().required("Required"),
       description: Yup.string().required("Required"),
@@ -102,6 +104,7 @@ const NewProduct = () => {
       if (!isLoading && !isError) {
         formik.setValues({
           name: data.data.name,
+          code: data.data.code,
           category: data.data.category,
           unit: data.data.unit,
           description: data.data.description ? data.data.description : "",
@@ -144,6 +147,25 @@ const NewProduct = () => {
                       fullWidth
                       helperText={
                         formik.touched.name && formik.errors.name
+                      }
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      variant="outlined"
+                      my={2}
+                    />
+                  </Grid>
+
+                  <Grid item md={6}>
+                    <TextField
+                      name="code"
+                      label="Product Code"
+                      value={formik.values.code}
+                      error={Boolean(
+                        formik.touched.code && formik.errors.code
+                      )}
+                      fullWidth
+                      helperText={
+                        formik.touched.code && formik.errors.code
                       }
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
