@@ -83,6 +83,7 @@ const NewProduct = () => {
       try {
         if (id) {
           values.id = id;
+          values.createDate = new Date();
           await updateMutation.mutateAsync(values);
         } else {
           await mutation.mutateAsync(values);

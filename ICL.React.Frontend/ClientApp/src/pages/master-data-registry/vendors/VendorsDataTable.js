@@ -39,6 +39,7 @@ const themeCustom = createTheme({
 
 const VendorsDataTable = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
   const [filterModel, setFilterModel] = useState({
     items: [],
   });
@@ -48,16 +49,17 @@ const VendorsDataTable = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const handleClick = (event) => {
+  const handleClick = (event, params) => {
     setAnchorEl(event.currentTarget);
+    setSelectedRow(params);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleEditVendor = (params) => {
+  const handleEditVendor = () => {
     navigate(
-      `/master-data-registry/vendors/new-vendor/${params.id}`
+      `/master-data-registry/vendors/new-vendor/${selectedRow.id}`
     );
   };
   const {
@@ -127,7 +129,7 @@ const VendorsDataTable = () => {
                     <Button
                       startIcon={<MoreVertIcon />}
                       size="small"
-                      onClick={handleClick}
+                      onClick={(event) => handleClick(event, params)}
                     ></Button>
                     <Menu
                       id="demo-customized-menu"
@@ -139,7 +141,7 @@ const VendorsDataTable = () => {
                       onClose={handleClose}
                     >
                       <MenuItem
-                        onClick={() => handleEditVendor(params)}
+                        onClick={handleEditVendor}
                         disableRipple
                       >
                         <EditIcon />
@@ -147,7 +149,7 @@ const VendorsDataTable = () => {
                       </MenuItem>
                       <Divider />
                       <MenuItem
-                        onClick={() => handleOpenDeleteModal(params.id)}
+                        onClick={() => handleOpenDeleteModal(selectedRow.id)}
                         disableRipple
                       >
                         <DeleteIcon />
