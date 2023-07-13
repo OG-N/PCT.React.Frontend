@@ -7,7 +7,6 @@ import {
   CardContent as MuiCardContent,
   Divider as MuiDivider,
   Grid,
-  // Link,
   Paper,
   Typography,
   List,
@@ -18,7 +17,6 @@ import {
   Box,
   Tab,
   TextField,
-  // Container,
   CardMedia,
   Stack, Chip
 } from "@mui/material";
@@ -26,16 +24,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import styled from "@emotion/styled";
 import {spacing} from "@mui/system";
-import {
-  MDBCarousel,
-  MDBCarouselItem,
-} from 'mdb-react-ui-kit';
-import { useMutation, useQuery } from "@tanstack/react-query";
-import FirstImg from "../../../src/vendor/illustration-1.png";
-import SecondImg from "../../../src/vendor/illustration-2.png";
-import ThirdImg from "../../../src/vendor/illustration-3.png";
-import SuccessCovid from "../../../src/vendor/success-covid.png";
-import SuccessData from "../../../src/vendor/success-data.png";
+import { useQuery } from "@tanstack/react-query";
 import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -43,10 +32,11 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import SearchIcon from '@mui/icons-material/Search';
-import {NavLink} from "react-router-dom";
 import async from "../../components/Async";
 import { getCMSContentImpactByName } from "../../api/cmscontent-impact";
 import { getCMSContentLeadershipByName } from "../../api/cmscontent-leadership";
+import AddContentLeadership from "./AddContentLeadership";
+import AddContentImpact from "./AddContentImpact";
 
 const BannerContent = async(() => import("./HomeBanner"));
 
@@ -334,55 +324,7 @@ const Home = () => {
       useQuery([rolID, "getCMSContentImpactByName"], getCMSContentImpactByName, { refetchOnWindowFocus: false, enabled:true });
   const { data: dataLeadershipByRol, isLoading: isLoadingLeadershipByRol, isError: isErrorLeadershipByRol} =
       useQuery([rolID, "getCMSContentLeadershipByName"], getCMSContentLeadershipByName, { refetchOnWindowFocus: false, enabled:true}
-        );
-
-  const AddContentImpact = () => {
-    if (isLoadingImpactByRol) { return; }
-    if (dataImpactByRol && dataImpactByRol.data) {
-        return dataImpactByRol.data.map(element => (
-            <Box sx={{ p: 2 }} border={1} borderColor="lightgrey">
-                <Card sx={{ display: 'flex' }}>
-                    <CardMedia component="img" sx={{ width: 300 }} image={element.image} />
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <CardContent sx={{ flex: '1 0 auto' }}>
-                            <Typography component="div" variant="h5">
-                                {element.title}
-                            </Typography>
-                            <Typography variant="body2" component="div">
-                                {element.description}
-                            </Typography>
-                        </CardContent>
-                    </Box>
-                </Card>
-            </Box>
-        ))
-    }
-  }; 
-  const AddContentLeadership = () => {
-      if (isLoadingLeadershipByRol) { return; }
-        if (dataLeadershipByRol && dataLeadershipByRol.data) {
-            return dataLeadershipByRol.data.map(element => (
-                <Grid container direction="row" alignItems="center" mb={2} spacing={12}>
-                    <Grid item md={3}>
-                        <Avatar alt="{element.name}" src={element.image} />
-                    </Grid>
-                    <Grid item md={8} mx={3}>
-                        <Grid container direction="column" alignItems="left" mb={2}>
-                            <NavLink to={element.name.replace(/\s/g, "-")}>
-                                <Grid item>
-                                    <Typography sx={{ fontWeight: 700, fontSize: 18 }}>{element.name}</Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Typography sx={{ fontSize: 18 }}>{element.position}</Typography>
-                                </Grid>
-                            </NavLink>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                </Grid>
-            ))
-        }
-    }; 
+  );
 
 
   return (
@@ -419,14 +361,16 @@ const Home = () => {
                             </Typography>
                             <Divider />
                             <Spacer mb={4} />
-                            {AddContentImpact()}
+                            <AddContentImpact
+                                dataImpactByRol={dataImpactByRol}
+                                isLoadingImpactByRol={isLoadingImpactByRol}
+                            />
                         </CardContent>
                     </Card>
                 </Paper>
             </Box>
           </Grid>
           <Grid item xs={4} sx={{ display: 'flex' }}>
-
             <Box>
                 <Paper square={true} sx={{ borderTop: 5 }} elevation={8}>
                     <Card sx={{ display: 'flex' }}>
@@ -436,12 +380,14 @@ const Home = () => {
                             </Typography>
                             <Divider />
                             <Spacer mb={4} />
-                            {AddContentLeadership()}
+                            <AddContentLeadership
+                                isLoadingLeadershipByRol={isLoadingLeadershipByRol}
+                                dataLeadershipByRol={dataLeadershipByRol}
+                            />
                         </CardContent>
                     </Card>
                 </Paper>
             </Box>
-
           </Grid>
         </Grid>
       </Grid>
