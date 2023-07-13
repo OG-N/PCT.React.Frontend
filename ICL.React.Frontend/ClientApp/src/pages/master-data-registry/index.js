@@ -16,6 +16,8 @@ import {NavLink} from "react-router-dom";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import LineChart from "../charts/Chartjs/LineChart";
+import {useQuery} from "@tanstack/react-query";
+import {getDashboardStatistics} from "../../api/dashboard";
 
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 const Card = styled(MuiCard)(spacing);
@@ -24,6 +26,20 @@ const CardContent = styled(MuiCardContent)(spacing);
 const MasterDataRegistry = () => {
   const theme = useTheme();
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
+
+  const {
+    data,
+    isLoading,
+    isError,
+  } = useQuery(["getDashboardStatistics"], getDashboardStatistics);
+
+  if (isLoading) {
+    return `...loading`;
+  }
+
+  if (isError) {
+    return `...error`;
+  }
 
   return (
     <React.Fragment>
@@ -47,7 +63,7 @@ const MasterDataRegistry = () => {
                       NUMBER OF RECORDS
                     </Typography>
                     <Typography variant="h5" component="div" sx={{ fontSize: 18, textAlign: 'center' }}>
-                      60
+                      {data.data.allRecords}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -59,7 +75,7 @@ const MasterDataRegistry = () => {
                       NUMBER OF CATALOGUES
                     </Typography>
                     <Typography variant="h5" component="div" sx={{ fontSize: 18, textAlign: 'center' }}>
-                      43
+                      {data.data.approved}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -71,7 +87,7 @@ const MasterDataRegistry = () => {
                       PENDING APPROVAL
                     </Typography>
                     <Typography variant="h5" component="div" sx={{ fontSize: 18, textAlign: 'center', color:'white' }}>
-                      16
+                      {data.data.pending}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -83,7 +99,7 @@ const MasterDataRegistry = () => {
                       REJECTED
                     </Typography>
                     <Typography variant="h5" component="div" sx={{ fontSize: 18, textAlign: 'center', color:'white' }}>
-                      64
+                      {data.data.rejected}
                     </Typography>
                   </CardContent>
                 </Card>
