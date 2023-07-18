@@ -1,5 +1,9 @@
-import React from "react";
-import { useRoutes } from "react-router-dom";
+import React, { createContext, useState, useEffect } from "react";
+import { useRoutes, Outlet, useNavigate } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { userUpdateInfo } from "./components/auth/userUpdateInfo";
+import { routesUpdateInfo } from "./components/auth/routesUpdateInfo";
+import { getPermissionsForUser } from "./components/auth/getPermissionsForUser";
 import { Provider } from "react-redux";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { CacheProvider } from "@emotion/react";
@@ -8,15 +12,18 @@ import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-import "./i18n";
 import createTheme from "./theme";
 import routes from "./routes";
 
 import useTheme from "./hooks/useTheme";
 import { store } from "./redux/store";
 import createEmotionCache from "./utils/createEmotionCache";
-import {AuthenticatedTemplate, useMsalAuthentication} from "@azure/msal-react";
-import {InteractionType} from "@azure/msal-browser";
+import { AuthenticatedTemplate, useMsalAuthentication } from "@azure/msal-react";
+import { useMsal } from "@azure/msal-react";
+import { InteractionType } from "@azure/msal-browser";
+
+export const FilteredRoutesContext = createContext([]);
+export const PermissionsContext = createContext([]);
 
 // import { PublicClientApplication } from "@azure/msal-browser";
 // import { MsalProvider } from "@azure/msal-react";
@@ -29,37 +36,94 @@ import {InteractionType} from "@azure/msal-browser";
 const clientSideEmotionCache = createEmotionCache();
 
 function App({ emotionCache = clientSideEmotionCache }) {
-  useMsalAuthentication(InteractionType.Redirect);
-  //Code to delete routes by permissions
-  //need more test:
-  /*var routes2 = routes.slice();
-  for (var itemRoute of routes2) {
-      if (itemRoute.children) {
-          for (var itemChild of itemRoute.children) {
-              if (itemChild.path && itemChild.path.length > 0) {
-                  if (itemChild.path != "sign-in" && itemChild.path != "sign-up" &&
-                      itemChild.path != "reset-password" && itemChild.path != "404" &&
-                      itemChild.path != "500" && itemChild.path != "*") {
+   const [userPermissions, setUserPermissions] = React.useState(null);
+   const [updatedRoutes, setRoutes] = React.useState([]);
+   const resultAuth = useMsalAuthentication(InteractionType.Redirect);
+   const [filteredRoutesContext, setFilteredRoutes] = useState([]);
+   const [permissionsContext, setPermissionsContext] = useState([]);
 
-                      var itemValue = CheckRol(itemChild.path, null);
-                      console.log("path", itemChild.path);
-                      console.log("true/false", itemValue);
+   const { instance, accounts, inProgress } = useMsal();
+   const user = accounts && accounts.length > 0 ? accounts[0] : null;
 
+   const enableSecurity = false;
+   //Update information into the DB with information from Microsoft Azure
+   //Get permissions of the user
+   React.useEffect(() => {
+        const updateUserAndFetchPermissions = async () => {
+            if (user) {
+                await userUpdateInfo(user);
+                const permissions = await getPermissionsForUser(user);
+                if (permissions) {
 
-                      if (!CheckRol(itemChild.path, null)) {
-                          const indexNum = itemRoute.children.indexOf(itemChild);
-                          itemRoute.children.splice(indexNum, 1);
-                      }
-                  }
-              }
-          }
-      }
-  }*/
-  const content = useRoutes(routes);
+                    setUserPermissions(permissions);
+                    //read permission to enable route
+                    const filteredPermissions = permissions.filter((permission) => permission.category === "Read");
+                    //filter route based on permissions
+                    const filteredRoutes = routes.map((route) => {
+                        const sanitizedPath = route.path.replace(/\//g, "");
 
+                        //Exception: always enable "auth"
+                        if (sanitizedPath == "auth") {
+                            return route;
+                        }
+
+                        if (!filteredPermissions.some((permission) => permission.route.replace(/\//g, "") === sanitizedPath) && sanitizedPath !== '') {
+                            return { ...route, disabled: true };
+                        }
+
+                        if (route.children && route.children.length > 0) {
+                            const filteredChildren = route.children.map((child) => {
+                                const sanitizedChildPath = child.path.replace(/\//g, "");
+                                if (!filteredPermissions.some((permission) => (permission.route.includes(sanitizedPath) && permission.route.includes(sanitizedChildPath))) && !(sanitizedChildPath == "")) {
+                                    return { ...child, disabled: true };
+                                }
+                                return child;
+                            }).filter(child => !child.disabled || !enableSecurity);
+
+                            return { ...route, children: filteredChildren };
+                        }
+
+                        return route;
+                    }).filter(route => !route.disabled || !enableSecurity);
+                    setRoutes(filteredRoutes);
+                    setFilteredRoutes(filteredRoutes);
+
+                    //set other permissions to context
+                    try {
+                        const CreateUpdatePermissions = permissions.filter((permission) => permission.category === "Write" || permission.category === "Update");
+                        setPermissionsContext(CreateUpdatePermissions);
+                    } catch (error) {
+                        console.error("An error occurred:", error);
+                    }
+                }
+            }
+        };
+        updateUserAndFetchPermissions();
+   }, [user]);  
+   //Update routes information in the DataBase
+   React.useEffect(() => {
+       const updateRoutesInformationDB = async () => {
+           if (routes) {
+               await routesUpdateInfo(routes);
+           }
+       };
+       updateRoutesInformationDB();
+   }, [routes]);  
+  //const content = useRoutes(routes);
+  const content = useRoutes(updatedRoutes);
+  const navigate = useNavigate();
   const { theme } = useTheme();
 
+
+  useEffect(() => {
+     if (!content && user && updatedRoutes && updatedRoutes.length >0) {
+         navigate('/');
+     }
+  }, [content, user, updatedRoutes, navigate]);
+
   return (
+  <FilteredRoutesContext.Provider value={filteredRoutesContext}>           
+   <PermissionsContext.Provider value={permissionsContext}>
     <CacheProvider value={emotionCache}>
       <HelmetProvider>
         <Helmet
@@ -74,7 +138,9 @@ function App({ emotionCache = clientSideEmotionCache }) {
           </LocalizationProvider>
         </Provider>
       </HelmetProvider>
-    </CacheProvider>
+              </CacheProvider>
+    </PermissionsContext.Provider>
+   </FilteredRoutesContext.Provider>
   );
 }
 

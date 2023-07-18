@@ -1,0 +1,31 @@
+{
+  "Home": {
+    "BannerContent": {
+      "title": "Inicio"
+    },
+    "HeaderContent": {
+      "title": "Encabezado",
+      "link1": "Enlace 1",
+      "link2": "Enlace 2",
+      "link3": "Enlace 3"
+    },
+    "EventContent": {
+      "title": "Eventos",
+      "upcoming": "Próximos",
+      "past": "Pasados",
+      "searchPlaceholder": "Buscar"
+    },
+    "YammerContent": {
+      "title": "Feed de Yammer"
+    },
+    "QuickLinksContent": {
+      "title": "Enlaces rápidos"
+    },
+    "OurImpact": {
+      "title": "Nuestro Impacto"
+    },
+    "LeadershipProfiles": {
+      "title": "Perfiles de Liderazgo"
+    }
+  }
+}

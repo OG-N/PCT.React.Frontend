@@ -13,5 +13,6 @@ export const GetCMSContentRolessByID = async (values) => {
     if (values.queryKey[0].length <= 0) { 
         return "";
     }
-    return await axios.get(`${apiRoutes.cmscontentrolesbyid}` + "/" + values.queryKey[0] + "/" + values.queryKey[1]);
+    var result=await axios.get(`${apiRoutes.cmscontentrolesbyid}` + "/" + values.queryKey[0] + "/" + values.queryKey[1]);
+    return result;
 };

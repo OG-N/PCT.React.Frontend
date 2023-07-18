@@ -1,0 +1,31 @@
+{
+  "Home": {
+    "BannerContent": {
+      "title": "Accueil"
+    },
+    "HeaderContent": {
+      "title": "En-tête",
+      "link1": "Lien 1",
+      "link2": "Lien 2",
+      "link3": "Lien 3"
+    },
+    "EventContent": {
+      "title": "Événements",
+      "upcoming": "À venir",
+      "past": "Passés",
+      "searchPlaceholder": "Rechercher"
+    },
+    "YammerContent": {
+      "title": "Flux Yammer"
+    },
+    "QuickLinksContent": {
+      "title": "Liens rapides"
+    },
+    "OurImpact": {
+      "title": "Notre Impact"
+    },
+    "LeadershipProfiles": {
+      "title": "Profils de Leadership"
+    }
+  }
+}

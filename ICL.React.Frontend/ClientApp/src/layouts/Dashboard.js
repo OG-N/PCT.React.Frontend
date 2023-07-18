@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { FilteredRoutesContext } from "../App";
 import styled from "@emotion/styled";
 import { Outlet } from "react-router-dom";
 
@@ -54,6 +55,17 @@ const Dashboard = ({ children }) => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+    const filteredRoutes = useContext(FilteredRoutesContext);
+
+    // Filter the dashboardItems based on the filteredRoutes
+    const filteredDashboardItems = dashboardItems.filter((item) => {
+        const itemPath = item.pages[0].href.replace(/\//g, "");
+        const itemInRoutes = filteredRoutes.some(
+            (route) => route.path.replace(/\//g, "") === itemPath
+        );
+        return itemInRoutes;
+    });
+
 
   return (
     <Root>
@@ -66,13 +78,13 @@ const Dashboard = ({ children }) => {
             variant="temporary"
             open={mobileOpen}
             onClose={handleDrawerToggle}
-            items={dashboardItems}
+            items={filteredDashboardItems}
           />
         </Box>
         <Box sx={{ display: { xs: "none", md: "block" } }}>
           <Sidebar
             PaperProps={{ style: { width: drawerWidth } }}
-            items={dashboardItems}
+            items={filteredDashboardItems}
           />
         </Box>
       </Drawer>

@@ -117,22 +117,35 @@ const MISAdministration = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <a target="_blank" rel="noopener noreferrer" href="https://portal.azure.com/#view/Microsoft_AAD_IAM/GroupDetailsMenuBlade/~/Overview/groupId/57228205-3e4e-4dc1-9ccc-98e4c88c0e42">
-                        User Registry
+                        User Administration
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
-                      <a target="_blank" rel="noopener noreferrer" href="https://portal.azure.com/#view/Microsoft_AAD_IAM/GroupDetailsMenuBlade/~/Overview/groupId/57228205-3e4e-4dc1-9ccc-98e4c88c0e42">
-                        Assign New User
-                      </a>
+                        <NavLink to={`/MISAdministration/users-list`}>
+                            Users Information
+                        </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
-                      <a target="_blank" rel="noopener noreferrer" href="https://portal.azure.com/#view/Microsoft_AAD_IAM/GroupDetailsMenuBlade/~/Overview/groupId/57228205-3e4e-4dc1-9ccc-98e4c88c0e42">
-                        Remove User
-                      </a>
+                        <NavLink to={`/MISAdministration/userroles-list`}>
+                            Roles Assignment
+                        </NavLink>
                       <Divider />
                     </Grid>
+                    <Grid item md={12}>
+                        <NavLink to={`/MISAdministration/roles-list`}>
+                            Roles Management
+                        </NavLink>
+                      <Divider />
+                    </Grid>
+                    <Grid item md={12}>
+                        <NavLink to={`/MISAdministration/roleoptions-List`}>
+                            Permission Management
+                        </NavLink>
+                      <Divider />
+                    </Grid>
+
                   </Grid>
                 </Box>
               </CardContent>

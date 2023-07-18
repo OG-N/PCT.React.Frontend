@@ -1,5 +1,6 @@
 import React from "react";
-import {Helmet} from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
+import { useNavigate } from 'react-router-dom';
 import {
   Avatar as MuiAvatar,
   Card as MuiCard,
@@ -19,6 +20,7 @@ import {
   Tab,
   TextField,
   // Container,
+  Button,
   CardMedia,
   Stack, Chip
 } from "@mui/material";
@@ -47,10 +49,10 @@ import {NavLink} from "react-router-dom";
 import async from "../../components/Async";
 import { getCMSContentImpactByName } from "../../api/cmscontent-impact";
 import { getCMSContentLeadershipByName } from "../../api/cmscontent-leadership";
+import { useTranslation } from 'react-i18next';
+
 
 const BannerContent = async(() => import("./HomeBanner"));
-
-
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
 const Divider = styled(MuiDivider)(spacing);
@@ -62,7 +64,8 @@ const Avatar = styled(MuiAvatar)`
   width: 80px;
 `;
 
-const HeaderContent=()=> {
+const HeaderContent = () => {
+  const { t } = useTranslation();
   return (
     <Box>
       <Paper square={true} sx={{ borderTop: 5 }} elevation={8}>
@@ -70,7 +73,7 @@ const HeaderContent=()=> {
           <CardContent>
             <Paper elevation={3}>
               <Typography sx={{ fontSize: 28 }}>
-                Strategy & Key References
+                Strategy & Key References  
               </Typography>
               <Divider />
               <br />
@@ -336,6 +339,11 @@ const Home = () => {
       useQuery([rolID, "getCMSContentLeadershipByName"], getCMSContentLeadershipByName, { refetchOnWindowFocus: false, enabled:true}
         );
 
+
+  const navigate = useNavigate();
+  const handleNavLinkClick = (elementId) => {
+      navigate('/leadership-profile', { state: { id: elementId } });
+  };
   const AddContentImpact = () => {
     if (isLoadingImpactByRol) { return; }
     if (dataImpactByRol && dataImpactByRol.data) {
@@ -368,14 +376,16 @@ const Home = () => {
                     </Grid>
                     <Grid item md={8} mx={3}>
                         <Grid container direction="column" alignItems="left" mb={2}>
-                            <NavLink to={element.name.replace(/\s/g, "-")}>
+                            <Button variant="text" onClick={() => handleNavLinkClick(element.id)}
+                                sx={{ textDecoration: 'underline', fontWeight: 700, fontSize: 18, textAlign: 'left', display: 'block'}}
+                            >
                                 <Grid item>
                                     <Typography sx={{ fontWeight: 700, fontSize: 18 }}>{element.name}</Typography>
                                 </Grid>
                                 <Grid item>
                                     <Typography sx={{ fontSize: 18 }}>{element.position}</Typography>
                                 </Grid>
-                            </NavLink>
+                            </Button>
                         </Grid>
                     </Grid>
                     <Divider />

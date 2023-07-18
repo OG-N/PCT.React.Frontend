@@ -26,7 +26,6 @@ import WorkPlanStatus from "./pages/manage/WorkPlanStatus";
 import SalaryApprovalRequests from "./pages/manage/SalaryApprovalRequests";
 import TravelApprovalRequests from "./pages/manage/TravelApprovalRequests";
 
-
 // Dashboard components
 const Default = async(() => import("./pages/dashboards/Default"));
 const Products = async(() => import("./pages/dashboards/products"));
@@ -79,6 +78,7 @@ const GreenHouseGasMonitoring = async(() => import("./pages/enable/GreenHouseGas
 const Demand = async(() => import("./pages/enable/Demand"));
 const KPMGDeliver = async(() => import("./pages/enable/Deliver"));
 const MISAdministration = async(() => import("./pages/MISAdministration"));
+const ProfileGeneric = async(() => import("./pages/home/ProfileGeneric"));
 const ProfileDanRhodes = async(() => import("./pages/home/ProfileDanRhodes"));
 const ProfileJabuNyenwa = async(() => import("./pages/home/ProfileJabuNyenwa"));
 const ProfileSeanLockhead = async(() => import("./pages/home/ProfileSeanLockhead"));
@@ -119,6 +119,11 @@ const CMSContentImpactCreate = async(() => import("./pages/MISAdministration/CMS
 const CMSContentImpactList = async(() => import("./pages/MISAdministration/CMSContentImpact-list"));
 const CMSContentLeadershipCreate = async(() => import("./pages/MISAdministration/CMSContentLeadership-create"));
 const CMSContentLeadershipList = async(() => import("./pages/MISAdministration/CMSContentLeadership-list"));
+const UMUsersList = async(() => import("./pages/MISAdministration/UMUsers-list"));
+const UMRolesList = async(() => import("./pages/MISAdministration/UMRoles-list"));
+const UMOptionRoutesList = async(() => import("./pages/MISAdministration/UMOptionRoutes-List"));
+const UMRoleOptionsList = async(() => import("./pages/MISAdministration/UMRoleOptions-List"));
+const UMUserRolesList = async(() => import("./pages/MISAdministration/UMUserRoles-List"));
 const CustomsRequirements = async(() => import("./pages/plan/CustomsRequirements"));
 const StakeholderRegister = async(() => import("./pages/manage/StakeholderRegister"));
 const ProofOfDelivery = async(() => import("./pages/deliver/ProofOfDelivery"));
@@ -147,21 +152,25 @@ const routes = [
         element: <HomePage />,
       },
       {
-        path: "/dan-rhodes",
-        element: <ProfileDanRhodes />,
-      },
-      {
-        path: "/jabu-nyenwa",
-        element: <ProfileJabuNyenwa />,
-      },
-      {
-        path: "/sean-lockhead",
-        element: <ProfileSeanLockhead />,
-      },
-      {
-        path: "/marilyn-noguera",
-        element: <ProfileMarilynNoguera />,
-      },
+         path: "leadership-profile",
+         element: <ProfileGeneric />,
+      },    
+      //{
+      //  path: "/dan-rhodes",
+      //  element: <ProfileDanRhodes />,
+      //},
+      //{
+      //  path: "/jabu-nyenwa",
+      //  element: <ProfileJabuNyenwa />,
+      //},
+      //{
+      //  path: "/sean-lockhead",
+      //  element: <ProfileSeanLockhead />,
+      //},
+      //{
+      //  path: "/marilyn-noguera",
+      //  element: <ProfileMarilynNoguera />,
+      //},
       {
         path: "macro-eyes",
         element: <MacroEyes />,
@@ -496,18 +505,18 @@ const routes = [
         path: "middle-ware-status",
         element: <MiddleWareStatus />
       },
-      {
-        path: "user-registry",
-        element: <UserRegistry />,
-      },
-      {
-        path: "new-user-form",
-        element: <NewUserForm />,
-      },
-      {
-        path: "assign-user-role",
-        element: <AssignUserRole />,
-      },
+    // {
+    //   path: "user-registry",
+    //   element: <UserRegistry />,
+    // },
+    // {
+    //   path: "new-user-form",
+    //   element: <NewUserForm />,
+    // },
+    // {
+    //   path: "assign-user-role",
+    //   element: <AssignUserRole />,
+    // },
       {
         path: "content-registry",
         element: <CMSContentRegistry />,
@@ -527,6 +536,26 @@ const routes = [
       {
         path: "content-leadership-list",
         element: <CMSContentLeadershipList />,
+      },
+      {
+        path: "users-list",
+        element: <UMUsersList />,
+      },
+      {
+        path: "roles-list",
+        element: <UMRolesList />,
+      },
+      {
+        path: "optionroutes-List",
+        element: <UMOptionRoutesList />,
+      },
+      {
+        path: "roleoptions-List",
+        element: <UMRoleOptionsList />,
+      },
+      {
+        path: "userroles-list",
+        element: <UMUserRolesList />,
       }
     ],
   },
@@ -1016,5 +1045,6 @@ const routes = [
     ],
   },
 ];
+
 
 export default routes;

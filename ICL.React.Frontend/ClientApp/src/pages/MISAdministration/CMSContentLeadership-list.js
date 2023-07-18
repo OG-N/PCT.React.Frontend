@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { PermissionsContext } from "../../App";
+import { useLocation } from 'react-router-dom';
 import { Button, Card, CardContent, Paper } from "@mui/material";
 import {
     Box,
@@ -76,11 +78,20 @@ const CMSContentLeadershipList = () => {
             return dataRoles.data.map(element => (
                 <div>
                     <FormControlLabel control={<Checkbox id={element.id} defaultChecked={element.status} />}
-                        label={element.roleName} />
+                        label={element.name} />
                 </div>
             ))
         }
     };
+
+    //Filter page options based on permissions
+    const CreateUpdatePermissions = useContext(PermissionsContext);
+    const location = useLocation();
+    const currentPath = location.pathname.replace(/\//g, "", "");
+    const CreatePermissions = CreateUpdatePermissions.filter((permission) => permission.route.replace(/\//g, "", "") === currentPath && permission.category === "Write");
+    const UpdatePermissions = CreateUpdatePermissions.filter((permission) => permission.route.replace(/\//g, "", "") === currentPath && permission.category === "Update");
+    const showCreate = CreatePermissions && CreatePermissions.length > 0;
+    const showUpdateAndDelete = UpdatePermissions && UpdatePermissions.length > 0;
 
   return (
     <Card mb={6}>
@@ -99,6 +110,7 @@ const CMSContentLeadershipList = () => {
                 mr={2}
                 variant="contained"
                 onClick={() => navigate("/MISAdministration/content-leadership-create")}
+                style={{ display: showCreate ? "inline-flex" : "none" }}
             >
                 Add New Content
             </Button>
@@ -114,7 +126,7 @@ const CMSContentLeadershipList = () => {
       </CardContent>
 
       <Paper>
-        <div style={{ height: 400, width: "100%" }}>
+        <div style={{ height: 650, width: "100%" }}>
           <DataGrid  rowHeight={150}
             columns={[
               {
@@ -203,7 +215,7 @@ const CMSContentLeadershipList = () => {
                       </DialogContentText>
                   </DialogContent>
                   <br />
-                  <Button variant="contained" onClick={handleCloseSave}>Save</Button>
+                  <Button variant="contained" onClick={handleCloseSave} style={{ display: showUpdateAndDelete ? "inline-flex" : "none" }}>Save</Button>
                   <br />
                   <Button onClick={handleClose}>Cancel</Button>
 

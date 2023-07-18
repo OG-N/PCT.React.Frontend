@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useState, useContext } from "react";
+import { PermissionsContext } from "../../App";
+import { useLocation } from 'react-router-dom';
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
 import styled from "@emotion/styled";
 import {
   Box,
@@ -59,6 +60,15 @@ const CMSNewContentImpactForm = () => {
       }
     }
   });
+
+    //Filter page options based on permissions
+    const CreateUpdatePermissions = useContext(PermissionsContext);
+    const location = useLocation();
+    const currentPath = location.pathname.replace(/\//g, "", "");
+    const CreatePermissions = CreateUpdatePermissions.filter((permission) => permission.route.replace(/\//g, "", "") === currentPath && permission.category === "Write");
+    const UpdatePermissions = CreateUpdatePermissions.filter((permission) => permission.route.replace(/\//g, "", "") === currentPath && permission.category === "Update");
+    const showCreate = CreatePermissions && CreatePermissions.length > 0;
+    const showUpdateAndDelete = UpdatePermissions && UpdatePermissions.length > 0;
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -142,7 +152,7 @@ const CMSNewContentImpactForm = () => {
 
                 <Grid container spacing={6}>
                     <Grid item md={4}>
-                        <Button type="submit" variant="contained" color="primary" mt={3}>
+                        <Button type="submit" variant="contained" color="primary" mt={3} style={{ display: showCreate ? "inline-flex" : "none" }}>
                             Save changes
                         </Button>
                     </Grid>

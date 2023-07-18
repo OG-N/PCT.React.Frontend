@@ -90,7 +90,7 @@ const AssignUserRole = () => {
                 {!isLoading && !isError
                   ? data.data.map((option) => (
                     <MenuItem key={option.id} value={option.id}>
-                      {option.roleName}
+                      {option.Name}
                     </MenuItem>
                   ))
                   : []}
