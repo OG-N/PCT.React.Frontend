@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 
 import { Button as MuiButton, Typography } from "@mui/material";
 import { spacing } from "@mui/system";
-
+import { useTranslation } from 'react-i18next';
 const Button = styled(MuiButton)(spacing);
 
 const Wrapper = styled.div`
@@ -19,6 +19,7 @@ const Wrapper = styled.div`
 `;
 
 function Page404() {
+  const { t } = useTranslation();
   return (
     <Wrapper>
       <Helmet title="404 Error" />
@@ -26,10 +27,10 @@ function Page404() {
         404
       </Typography>
       <Typography component="h2" variant="h5" align="center" gutterBottom>
-        Page not found.
+        {t('Page not found.')}
       </Typography>
       <Typography component="h2" variant="body1" align="center" gutterBottom>
-        The page you are looking for might have been removed.
+        {t('The page you are looking for might have been removed.')}
       </Typography>
 
       <Button
@@ -39,7 +40,7 @@ function Page404() {
         color="secondary"
         mt={2}
       >
-        Return to website
+        {t('Return to website')}
       </Button>
     </Wrapper>
   );

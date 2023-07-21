@@ -18,8 +18,10 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import NavbarNotificationsDropdown from "./NavbarNotificationsDropdown";
+import NavbarLanguagesDropdown from "./NavbarLanguagesDropdown";
 import NavbarUserDropdown from "./NavbarUserDropdown";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const AppBar = styled(MuiAppBar)`
   background: ${(props) => props.theme.header.background};
@@ -43,6 +45,7 @@ const Navbar = ({ onDrawerToggle }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const { t } = useTranslation();
 
   return (
     <React.Fragment>
@@ -60,10 +63,10 @@ const Navbar = ({ onDrawerToggle }) => {
               </IconButton>
             </Grid>
             <Grid item>
-              <Typography  variant="button" display="block" gutterBottom>Supply Chain Management</Typography>
+              <Typography  variant="button" display="block" gutterBottom>{t('Supply Chain Management')}</Typography>
             </Grid>
             <Grid item>
-              <Typography  variant="button" display="block" gutterBottom>Enterprise Resources</Typography>
+              <Typography  variant="button" display="block" gutterBottom>{t('Enterprise Resources')}</Typography>
             </Grid>
             <Grid item>
               <Button
@@ -74,7 +77,7 @@ const Navbar = ({ onDrawerToggle }) => {
                 onClick={handleClick}
               >
                 <Typography  variant="button" display="block" gutterBottom>
-                  Master Data Registry
+                  {t('Master Data Registry')}
                 </Typography>
               </Button>
               <Menu
@@ -90,7 +93,7 @@ const Navbar = ({ onDrawerToggle }) => {
                 <MenuItem onClick={() => {
                   navigate("/master-data-registry/products");
                   handleClose();
-                }}>Products</MenuItem>
+                }}>{t('Products')}</MenuItem>
                 <MenuItem onClick={() => {
                   navigate("/master-data-registry/locations");
                   handleClose();
@@ -99,23 +102,23 @@ const Navbar = ({ onDrawerToggle }) => {
                   navigate("/master-data-registry/vendors");
                   handleClose();
                 }}>
-                  Vendors
+                  {t('Vendors')}
                 </MenuItem>
                 <MenuItem onClick={() => {
                   navigate("/master-data-registry/carriers");
                   handleClose();
-                }}>Carriers</MenuItem>
+                }}>{t('Carriers')}</MenuItem>
                 <MenuItem onClick={() => {
                   navigate("/master-data-registry/units");
                   handleClose();
-                }}>Units</MenuItem>
+                }}>{t('Units')}</MenuItem>
                 <MenuItem onClick={() => {
                   navigate("/master-data-registry/categories");
                   handleClose();
-                }}>Category</MenuItem>
-                <MenuItem onClick={handleClose}>MDR Quality</MenuItem>
-                <MenuItem onClick={handleClose}>Governance</MenuItem>
-                <MenuItem onClick={handleClose}>Master Data Configuration</MenuItem>
+                }}>{t('Category')}</MenuItem>
+                <MenuItem onClick={handleClose}>{t('MDR Quality')}</MenuItem>
+                <MenuItem onClick={handleClose}>{t('Governance')}</MenuItem>
+                <MenuItem onClick={handleClose}>{t('Master Data Configuration')}</MenuItem>
               </Menu>
             </Grid>
             <Grid item>
@@ -144,7 +147,7 @@ const Navbar = ({ onDrawerToggle }) => {
               {/*<NavbarMessagesDropdown />*/}
               <NavbarNotificationsDropdown />
               {/*<NavbarUSAIDIcon />*/}
-              {/*<NavbarLanguagesDropdown />*/}
+              {<NavbarLanguagesDropdown />}
               <NavbarUserDropdown />
             </Grid>
           </Grid>

@@ -12,7 +12,7 @@ import { useTheme } from "@mui/material/styles";
 import {spacing} from "@mui/system";
 import FirstImg from "../../vendor/illustration-source.png";
 import {NavLink} from "react-router-dom";
-
+import { useTranslation } from 'react-i18next';
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
 const Divider = styled(MuiDivider)(spacing);
@@ -21,7 +21,7 @@ const Spacer = styled.div(spacing);
 const Source = () => {
   const theme = useTheme();
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
-
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       <Paper square={true} sx={{ width: "100%" }}>
@@ -37,18 +37,18 @@ const Source = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Market Conditions
+                  {t('Market Conditions')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
                 <Box px={4} my={3} sx={{ fontSize: 17, color: "#333333" }}>
                   <Grid container spacing={6}>
                     <Grid item md={12}>
-                      <NavLink to={""}>Primary and Secondary Data</NavLink>
+                      <NavLink to={""}>{t('Primary and Secondary Data')}</NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
-                      <a target="_blank" rel="noopener noreferrer" href="https://thepalladiumgroup.atlassian.net/l/cp/1U2Y9HNy">Market Research</a>
+                      <a target="_blank" rel="noopener noreferrer" href="https://thepalladiumgroup.atlassian.net/l/cp/1U2Y9HNy">{t('Market Research')}</a>
                       <Divider />
                     </Grid>
                   </Grid>
@@ -62,7 +62,7 @@ const Source = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Logistics Category Profiles
+                  {t('Logistics Category Profiles')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -70,26 +70,26 @@ const Source = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                     <NavLink to={`/source/warehousing`}>
-                    Warehousing
+                    {t('Warehousing')}
                       </NavLink>
                     
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/source/distribution`}>
-                        Distribution
+                        {t('Distribution')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>                      
                       <NavLink to={`/source/products`}>
-                        Products
+                        {t('Products')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/source/network-design`}>
-                        Network Design
+                       {t(' Network Design')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -104,7 +104,7 @@ const Source = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Procurement
+                  {t('Procurement')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -112,19 +112,19 @@ const Source = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/source/vendor-registry`}>
-                        Vendor Registry
+                        {t('Vendor Registry')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a href="#">
-                        Underqualified Bidder Action Plans
+                        {t('Underqualified Bidder Action Plans')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a href="#">
-                        Request for Proposals
+                        {t('Request for Proposals')}
                       </a>
                       <Divider />
                     </Grid>
@@ -136,7 +136,7 @@ const Source = () => {
                     {/*</Grid>*/}
                     <Grid item md={12}>
                       <a href="#">
-                        Service Level Agreements
+                        {t('Service Level Agreements')}
                       </a>
                       <Divider />
                     </Grid>

@@ -11,6 +11,7 @@ import { useTheme } from "@mui/material/styles";
 import {spacing} from "@mui/system";
 import FirstImg from "../../vendor/illustration-MIS.png";
 import {NavLink} from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
@@ -20,7 +21,7 @@ const Spacer = styled.div(spacing);
 const MISAdministration = () => {
   const theme = useTheme();
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
-
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       <Paper square={true} sx={{ width: "100%" }}>
@@ -36,14 +37,14 @@ const MISAdministration = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Interoperability
+                  {t('Interoperability')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
                 <Box px={4} my={3} sx={{ fontSize: 17, color: "#333333" }}>
                   <Grid container spacing={6}>
                     <Grid item md={12}>
-                      <a href="https://portal.azure.com/#@grmfutures.onmicrosoft.com/resource/subscriptions/a8177bba-e9b3-4b53-a8d9-2c528828d5ec/resourceGroups/2IDUSA.476.243/providers/Microsoft.ServiceBus/namespaces/GHSC-ICL/overview" target="_blank" rel="noopener noreferrer">Middleware Status</a>
+                      <a href="https://portal.azure.com/#@grmfutures.onmicrosoft.com/resource/subscriptions/a8177bba-e9b3-4b53-a8d9-2c528828d5ec/resourceGroups/2IDUSA.476.243/providers/Microsoft.ServiceBus/namespaces/GHSC-ICL/overview" target="_blank" rel="noopener noreferrer">{t('Middleware Status')}</a>
                       &nbsp;&nbsp;&nbsp;
                       <br />
                       {/*<NavLink to={`/MISAdministration/middle-ware-status`}>*/}
@@ -62,7 +63,7 @@ const MISAdministration = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Data Management
+                  {t('Data Management')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -70,31 +71,31 @@ const MISAdministration = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <a target="_blank" rel="noopener noreferrer" href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119630896/Data+Warehouse">
-                        Data Warehouse
+                        {t('Data Warehouse')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a target="_blank" rel="noopener noreferrer" href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119532641/Data+Lake">
-                        Data Lake
+                        {t('Data Lake')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a target="_blank" rel="noopener noreferrer" href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119630918/Data+Marts">
-                        Data Marts
+                        {t('Data Marts')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a href="#">
-                        Logic Apps
+                        {t('Logic Apps')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a href="#">
-                        Queues, Subscriptions, and Events
+                        {t('Queues, Subscriptions, and Events')}
                       </a>
                       <Divider />
                     </Grid>
@@ -109,7 +110,7 @@ const MISAdministration = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  User Management
+                  {t('User Management')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -117,19 +118,19 @@ const MISAdministration = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <a target="_blank" rel="noopener noreferrer" href="https://portal.azure.com/#view/Microsoft_AAD_IAM/GroupDetailsMenuBlade/~/Overview/groupId/57228205-3e4e-4dc1-9ccc-98e4c88c0e42">
-                        User Registry
+                        {t('User Registry')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a target="_blank" rel="noopener noreferrer" href="https://portal.azure.com/#view/Microsoft_AAD_IAM/GroupDetailsMenuBlade/~/Overview/groupId/57228205-3e4e-4dc1-9ccc-98e4c88c0e42">
-                        Assign New User
+                        {t('Assign New User')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a target="_blank" rel="noopener noreferrer" href="https://portal.azure.com/#view/Microsoft_AAD_IAM/GroupDetailsMenuBlade/~/Overview/groupId/57228205-3e4e-4dc1-9ccc-98e4c88c0e42">
-                        Remove User
+                        {t('Remove User')}
                       </a>
                       <Divider />
                     </Grid>
@@ -144,14 +145,14 @@ const MISAdministration = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Information Security
+                  {t('Information Security')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
                 <Box px={4} my={3} sx={{ fontSize: 17, color: "#333333" }}>
                   <Grid container spacing={6}>
                     <Grid item md={12}>
-                      <a href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119696690/Information+Security+Policy" target="_blank" rel="noopener noreferrer">Policy</a>
+                      <a href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119696690/Information+Security+Policy" target="_blank" rel="noopener noreferrer">{t('Policy')}</a>
                       <Divider />
                     </Grid>
                   </Grid>
@@ -166,7 +167,7 @@ const MISAdministration = () => {
                 <Card>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                            Content Management
+                            {t('Content Management')}
                         </Typography>
                         <Divider />
                         <Spacer mb={4} />
@@ -174,7 +175,7 @@ const MISAdministration = () => {
                             <Grid container spacing={6}>
                                 <Grid item md={12}>
                                     <NavLink to={`/MISAdministration/content-registry`}>
-                                        Content administration
+                                        {t('Content administration')}
                                     </NavLink>
                                     <Divider />
                                 </Grid>

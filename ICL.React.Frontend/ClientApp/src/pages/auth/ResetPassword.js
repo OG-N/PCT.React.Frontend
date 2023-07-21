@@ -6,7 +6,7 @@ import { Paper, Typography } from "@mui/material";
 
 import { ReactComponent as Logo } from "../../vendor/logo.svg";
 import ResetPasswordComponent from "../../components/auth/ResetPassword";
-
+import { useTranslation } from 'react-i18next';
 const Brand = styled(Logo)`
   fill: ${(props) => props.theme.palette.primary.main};
   width: 64px;
@@ -23,6 +23,7 @@ const Wrapper = styled(Paper)`
 `;
 
 function ResetPassword() {
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       <Brand />
@@ -30,10 +31,10 @@ function ResetPassword() {
         <Helmet title="Reset Password" />
 
         <Typography component="h1" variant="h4" align="center" gutterBottom>
-          Reset Password
+          {t('Reset Password')}
         </Typography>
         <Typography component="h2" variant="body1" align="center">
-          Enter your email to reset your password
+          {t('Enter your email to reset your password')}
         </Typography>
 
         <ResetPasswordComponent />

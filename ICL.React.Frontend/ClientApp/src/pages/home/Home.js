@@ -37,6 +37,7 @@ import { getCMSContentImpactByName } from "../../api/cmscontent-impact";
 import { getCMSContentLeadershipByName } from "../../api/cmscontent-leadership";
 import AddContentLeadership from "./AddContentLeadership";
 import AddContentImpact from "./AddContentImpact";
+import { useTranslation } from 'react-i18next';
 
 const BannerContent = async(() => import("./HomeBanner"));
 
@@ -53,6 +54,7 @@ const Avatar = styled(MuiAvatar)`
 `;
 
 const HeaderContent=()=> {
+  const { t } = useTranslation();
   return (
     <Box>
       <Paper square={true} sx={{ borderTop: 5 }} elevation={8}>
@@ -60,7 +62,7 @@ const HeaderContent=()=> {
           <CardContent>
             <Paper elevation={3}>
               <Typography sx={{ fontSize: 28 }}>
-                Strategy & Key References
+                {t('Strategy & Key References')}
               </Typography>
               <Divider />
               <br />
@@ -70,9 +72,7 @@ const HeaderContent=()=> {
                     <Card sx={{ height:90,  backgroundColor: "#333333" }}>
                       <CardContent>
                         <Typography variant="body2" sx={{ fontSize: 18, textAlign: 'center',color:'white' }}>
-                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119794707/Nextgen+ICL+strategy" target="_blank" rel="noopener noreferrer">NEXTGEN ICL
-                            STRATEGY
-                          </a>
+                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119794707/Nextgen+ICL+strategy" target="_blank" rel="noopener noreferrer">{t('NEXTGEN ICL STRATEGY')}</a>
                         </Typography>
                       </CardContent>
                     </Card>
@@ -82,7 +82,7 @@ const HeaderContent=()=> {
                           style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                       <CardContent>
                         <Typography sx={{ fontSize: 18, textAlign: 'center',color:'white' }}>
-                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119794714/Results+framework" target="_blank" rel="noopener noreferrer">RESULTS FRAMEWORK</a>
+                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119794714/Results+framework" target="_blank" rel="noopener noreferrer">{t('RESULTS FRAMEWORK')}</a>
                         </Typography>
                       </CardContent>
                     </Card>
@@ -92,7 +92,7 @@ const HeaderContent=()=> {
                           style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                       <CardContent>
                         <Typography sx={{ fontSize: 18, textAlign: 'center',color:'white' }}>
-                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119696749/HQ+workplan" target="_blank" rel="noopener noreferrer">HQ WORK PLAN</a>
+                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119696749/HQ+workplan" target="_blank" rel="noopener noreferrer">{t('HQ WORK PLAN')}</a>
                         </Typography>
                       </CardContent>
                     </Card>
@@ -102,8 +102,7 @@ const HeaderContent=()=> {
                           style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div" sx={{ fontSize: 18, textAlign: 'center',color:'white' }}>
-                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119499829/Country+office+workplan" target="_blank" rel="noopener noreferrer">COUNTRY OFFICE WORK
-                            PLANS</a>
+                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119499829/Country+office+workplan" target="_blank" rel="noopener noreferrer">{t('COUNTRY OFFICE WORK PLANS')}</a>
                         </Typography>
                       </CardContent>
                     </Card>
@@ -113,7 +112,7 @@ const HeaderContent=()=> {
                           style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                       <CardContent>
                         <Typography sx={{ fontSize: 18, textAlign: 'center',color:'white' }}>
-                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119630939/4PL+Play+book" target="_blank" rel="noopener noreferrer">4PL PLAYBOOK</a>
+                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2119630939/4PL+Play+book" target="_blank" rel="noopener noreferrer">{t('4PL PLAYBOOK')}</a>
                         </Typography>
                       </CardContent>
                     </Card>
@@ -123,7 +122,7 @@ const HeaderContent=()=> {
                           style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                       <CardContent>
                         <Typography sx={{ fontSize: 18, textAlign: 'center',color:'white' }}>
-                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2120155137/4PL+Body+of+knowledge" target="_blank" rel="noopener noreferrer">4PL BODY OF KNOWLEDGE</a>
+                          <a style={{ color: "white" }} href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2120155137/4PL+Body+of+knowledge" target="_blank" rel="noopener noreferrer">{t('4PL BODY OF KNOWLEDGE')}</a>
                         </Typography>
                       </CardContent>
                     </Card>
@@ -136,7 +135,8 @@ const HeaderContent=()=> {
       </Paper>
     </Box>)
 }
-const EventContent=({value,handleChange})=>{
+const EventContent = ({ value, handleChange }) => {
+  const { t } = useTranslation();
   return (
     <Box>
       <Paper square={true} sx={{ borderTop: 5 }} elevation={8}>
@@ -144,15 +144,15 @@ const EventContent=({value,handleChange})=>{
           <CardActionArea>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                Events
+                {t('Events')}
               </Typography>
               <Divider />
               <Box sx={{ width: '100%', typography: 'body1' }}>
                 <TabContext value={value}>
                   <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <TabList  onChange={handleChange}  aria-label="lab API tabs example">
-                      <Tab label="Upcoming" value="1" />
-                      <Tab label="Past" value="2" />
+                      <Tab label={t('Upcoming')} value="1" />
+                      <Tab label={t('Past')} value="2" />
                     </TabList>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
@@ -163,7 +163,7 @@ const EventContent=({value,handleChange})=>{
                     <List>
                       <ListItem disablePadding>
                         <ListItemButton>
-                          <ListItemText primary="NextGen IP Working Group (ICL + PSAs)"></ListItemText>
+                          <ListItemText primary={t('NextGen IP Working Group (ICL + PSAs)')}></ListItemText>
                         </ListItemButton>
                       </ListItem>
                       <ListItem disablePadding>
@@ -171,7 +171,7 @@ const EventContent=({value,handleChange})=>{
                           <PlaceIcon />
                         </ListItemIcon>
                         <ListItemButton>
-                          <ListItemText primary="Microsoft Teams"></ListItemText>
+                          <ListItemText primary={t('Microsoft Teams')}></ListItemText>
                         </ListItemButton>
                       </ListItem>
                       <ListItem disablePadding>
@@ -196,7 +196,7 @@ const EventContent=({value,handleChange})=>{
                     <List>
                       <ListItem disablePadding>
                         <ListItemButton>
-                          <ListItemText primary="NextGen 3PL Workshop"></ListItemText>
+                          <ListItemText primary={t('NextGen 3PL Workshop')}></ListItemText>
                         </ListItemButton>
                       </ListItem>
                       <ListItem disablePadding>
@@ -204,7 +204,7 @@ const EventContent=({value,handleChange})=>{
                           <PlaceIcon />
                         </ListItemIcon>
                         <ListItemButton>
-                          <ListItemText primary="Microsoft Teams"></ListItemText>
+                          <ListItemText primary={t('Microsoft Teams')}></ListItemText>
                         </ListItemButton>
                       </ListItem>
                       <ListItem disablePadding>
@@ -257,7 +257,8 @@ const EventContent=({value,handleChange})=>{
       </Paper>
     </Box>)
 }
-const YammerContent=()=> {
+const YammerContent = () => {
+  const { t } = useTranslation();
   return (
     <Box>
       <Paper square={true} sx={{ borderTop: 5 }} elevation={8}>
@@ -265,7 +266,7 @@ const YammerContent=()=> {
           <CardActionArea>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                Yammer Feed
+                {t('Yammer Feed')}
               </Typography>
               <Divider />
               <Typography component="p">
@@ -281,7 +282,8 @@ const YammerContent=()=> {
     </Box>)
 }
 
-const QuickLinksContent=()=>{
+const QuickLinksContent = () => {
+  const { t } = useTranslation();
   return (
     <Box>
       <Paper square={true} sx={{ borderTop: 5 }} elevation={8}>
@@ -289,17 +291,17 @@ const QuickLinksContent=()=>{
           <CardActionArea>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                Quick Links
+                {t('Quick Links')}
               </Typography>
               <Divider />
               <Stack direction="row" spacing={2} sx={{ marginBottom: 2, marginTop: 2 }}>
-                <Chip label="Timesheet" component="a" target="_blank" href="https://thepalladiumgroup-cp.deltekenterprise.com/cpweb/" clickable />
-                <Chip label="Expense Reports" component="a" target="_blank" href="https://palladiumgroup.sharepoint.com/:x:/r/sites/GHSCTechnical/Shared%20Documents/General/GBL%20FN01%20SOP06%20TL04%20Travel%20Expense%20claim%20and%20travel%20advance%20form.v17.01.xlsx?d=w64c35d9dae31491da4dd377a88e62547&csf=1&web=1&e=Gad3Wr" clickable />
-                <Chip label="Travel Reports" component="a" target="_blank" href="https://palladiumgroup.sharepoint.com/:w:/r/sites/GHSCTechnical/Shared%20Documents/General/REV%2011162021%20Request%20for%20Business%20Travel%20Approval%20Form.docx?d=w183517974d4c4ac6beac66e44a71bc5f&csf=1&web=1&e=MKZKuc" clickable />
+                <Chip label={t('Timesheet')} component="a" target="_blank" href="https://thepalladiumgroup-cp.deltekenterprise.com/cpweb/" clickable />
+                <Chip label={t('Expense Reports')} component="a" target="_blank" href="https://palladiumgroup.sharepoint.com/:x:/r/sites/GHSCTechnical/Shared%20Documents/General/GBL%20FN01%20SOP06%20TL04%20Travel%20Expense%20claim%20and%20travel%20advance%20form.v17.01.xlsx?d=w64c35d9dae31491da4dd377a88e62547&csf=1&web=1&e=Gad3Wr" clickable />
+                <Chip label={t('Travel Reports')} component="a" target="_blank" href="https://palladiumgroup.sharepoint.com/:w:/r/sites/GHSCTechnical/Shared%20Documents/General/REV%2011162021%20Request%20for%20Business%20Travel%20Approval%20Form.docx?d=w183517974d4c4ac6beac66e44a71bc5f&csf=1&web=1&e=MKZKuc" clickable />
               </Stack>
               <Stack direction="row" spacing={2} sx={{ marginBottom: 2 }}>
-                <Chip label="HR Portal" component="a" target="_blank" href="https://hrcompass.thepalladiumgroup.com/" clickable />
-                <Chip label="Learning Compass" component="a" target="_blank" href="https://palladium.blackboard.com/" clickable />
+                <Chip label={t('HR Portal')} component="a" target="_blank" href="https://hrcompass.thepalladiumgroup.com/" clickable />
+                <Chip label={t('Learning Compass')} component="a" target="_blank" href="https://palladium.blackboard.com/" clickable />
                 {/*<Chip label="Training" component="a" />*/}
               </Stack>
             </CardContent>
@@ -311,6 +313,7 @@ const QuickLinksContent=()=>{
 
 
 const Home = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
 
@@ -357,7 +360,7 @@ const Home = () => {
                     <Card sx={{ display: 'flex' }}>
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div">
-                                Our Impact
+                                {t('Our Impact')}
                             </Typography>
                             <Divider />
                             <Spacer mb={4} />
@@ -376,7 +379,7 @@ const Home = () => {
                     <Card sx={{ display: 'flex' }}>
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div">
-                                Leadership Profiles
+                                {t('Leadership Profiles')}
                             </Typography>
                             <Divider />
                             <Spacer mb={4} />

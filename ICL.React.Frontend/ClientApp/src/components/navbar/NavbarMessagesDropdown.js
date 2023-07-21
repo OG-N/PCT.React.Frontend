@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { MessageSquare } from "react-feather";
-
+import { useTranslation } from 'react-i18next';
 const Popover = styled(MuiPopover)`
   .MuiPaper-root {
     width: 300px;
@@ -71,7 +71,7 @@ function NavbarMessagesDropdown() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       <Tooltip title="Messages">
@@ -115,7 +115,7 @@ function NavbarMessagesDropdown() {
           </List>
           <Box p={1} display="flex" justifyContent="center">
             <Button size="small" component={Link} to="#">
-              Show all messages
+              {t('Show all messages')}
             </Button>
           </Box>
         </React.Fragment>
