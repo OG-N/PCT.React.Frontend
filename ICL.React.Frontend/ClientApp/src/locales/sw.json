@@ -1,0 +1,31 @@
+{
+  "Home": {
+    "BannerContent": {
+      "title": "Nyumbani"
+    },
+    "HeaderContent": {
+      "title": "Kichwa",
+      "link1": "Kiungo 1",
+      "link2": "Kiungo 2",
+      "link3": "Kiungo 3"
+    },
+    "EventContent": {
+      "title": "Matukio",
+      "upcoming": "Yajayo",
+      "past": "Yaliyopita",
+      "searchPlaceholder": "Tafuta"
+    },
+    "YammerContent": {
+      "title": "Yammer Feed"
+    },
+    "QuickLinksContent": {
+      "title": "Viungo Haraka"
+    },
+    "OurImpact": {
+      "title": "Athari Zetu"
+    },
+    "LeadershipProfiles": {
+      "title": "Maelezo ya Uongozi"
+    }
+  }
+}

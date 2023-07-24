@@ -4,7 +4,7 @@ import ThirdImg from "../../../src/vendor/illustration-3.png";
 import {Box} from "@mui/material";
 import {MDBCarousel, MDBCarouselItem} from "mdb-react-ui-kit";
 
-const BannerContent=()=> {
+const BannerContent = () => {
     return (
         <Box>
             <MDBCarousel showIndicators showControls fade>

@@ -1,0 +1,29 @@
+import { apiRoutes } from "../apiRoutes";
+import axios from "axios";
+
+export const newicl_options_route = async (values) => {
+  return await axios.post(`${apiRoutes.icl_options_route_create}`, values);
+};
+export const newicl_options_route_batch = async (values) => {
+    return await axios.post(`${apiRoutes.icl_options_route_create_batch}`, values);
+};
+export const updateicl_options_route = async (values) => {
+    return await axios.post(`${apiRoutes.icl_options_route_update}`, values);
+};
+export const updateicl_options_route_batch = async (values) => {
+    return await axios.post(`${apiRoutes.icl_options_route_update_batch}`, values);
+};
+export const deleteicl_options_route = async (values) => {
+    return await axios.post(`${apiRoutes.icl_options_route_delete}` + "/" + values);
+};
+
+export const geticl_options_route = async () => {
+    return await axios.get(`${apiRoutes.icl_options_route}`);
+};
+export const geticl_options_route_byid = async (values) => {
+    return await axios.get(`${apiRoutes.icl_options_route_byid}` + "/" + values);
+};
+export const geticl_options_route_userid = async (values) => {
+    return await axios.get(`${apiRoutes.icl_options_route_byuserid}` + "/" + values);
+};
+

@@ -18,6 +18,7 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import NavbarNotificationsDropdown from "./NavbarNotificationsDropdown";
+import NavbarLanguagesDropdown from "./NavbarLanguagesDropdown";
 import NavbarUserDropdown from "./NavbarUserDropdown";
 import {useNavigate} from "react-router-dom";
 

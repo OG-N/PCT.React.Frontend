@@ -1,0 +1,31 @@
+{
+  "Home": {
+    "BannerContent": {
+      "title": "Home"
+    },
+    "HeaderContent": {
+      "title": "Header",
+      "link1": "Link 1",
+      "link2": "Link 2",
+      "link3": "Link 3"
+    },
+    "EventContent": {
+      "title": "Events",
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "searchPlaceholder": "Search"
+    },
+    "YammerContent": {
+      "title": "Yammer Feed"
+    },
+    "QuickLinksContent": {
+      "title": "Quick Links"
+    },
+    "OurImpact": {
+      "title": "Our Impact"
+    },
+    "LeadershipProfiles": {
+      "title": "Leadership Profiles"
+    }
+  }
+}
