@@ -36,19 +36,19 @@ export const PermissionsContext = createContext([]);
 const clientSideEmotionCache = createEmotionCache();
 
 function App({ emotionCache = clientSideEmotionCache }) {
-   const [userPermissions, setUserPermissions] = React.useState(null);
-   const [updatedRoutes, setRoutes] = React.useState([]);
-   const resultAuth = useMsalAuthentication(InteractionType.Redirect);
-   const [filteredRoutesContext, setFilteredRoutes] = useState([]);
-   const [permissionsContext, setPermissionsContext] = useState([]);
+    const [userPermissions, setUserPermissions] = React.useState(null);
+    const [updatedRoutes, setRoutes] = React.useState([]);
+    const resultAuth = useMsalAuthentication(InteractionType.Redirect);
+    const [filteredRoutesContext, setFilteredRoutes] = useState([]);
+    const [permissionsContext, setPermissionsContext] = useState([]);
 
-   const { instance, accounts, inProgress } = useMsal();
-   const user = accounts && accounts.length > 0 ? accounts[0] : null;
+    const { instance, accounts, inProgress } = useMsal();
+    const user = accounts && accounts.length > 0 ? accounts[0] : null;
 
-   const enableSecurity = false;
-   //Update information into the DB with information from Microsoft Azure
-   //Get permissions of the user
-   React.useEffect(() => {
+    const enableSecurity = false;
+    //Update information into the DB with information from Microsoft Azure
+    //Get permissions of the user
+    React.useEffect(() => {
         const updateUserAndFetchPermissions = async () => {
             if (user) {
                 await userUpdateInfo(user);
@@ -99,49 +99,49 @@ function App({ emotionCache = clientSideEmotionCache }) {
             }
         };
         updateUserAndFetchPermissions();
-   }, [user]);  
-   //Update routes information in the DataBase
-   React.useEffect(() => {
-       const updateRoutesInformationDB = async () => {
-           if (routes) {
-               await routesUpdateInfo(routes);
-           }
-       };
-       updateRoutesInformationDB();
-   }, [routes]);  
-  //const content = useRoutes(routes);
-  const content = useRoutes(updatedRoutes);
-  const navigate = useNavigate();
-  const { theme } = useTheme();
+    }, [user]);
+    //Update routes information in the DataBase
+    React.useEffect(() => {
+        const updateRoutesInformationDB = async () => {
+            if (routes) {
+                await routesUpdateInfo(routes);
+            }
+        };
+        updateRoutesInformationDB();
+    }, [routes]);
+    //const content = useRoutes(routes);
+    const content = useRoutes(updatedRoutes);
+    const navigate = useNavigate();
+    const { theme } = useTheme();
 
 
-  useEffect(() => {
-     if (!content && user && updatedRoutes && updatedRoutes.length >0) {
-         navigate('/');
-     }
-  }, [content, user, updatedRoutes, navigate]);
+    useEffect(() => {
+        if (!content && user && updatedRoutes && updatedRoutes.length >0) {
+            navigate('/');
+        }
+    }, [content, user, updatedRoutes, navigate]);
 
-  return (
-  <FilteredRoutesContext.Provider value={filteredRoutesContext}>           
-   <PermissionsContext.Provider value={permissionsContext}>
-    <CacheProvider value={emotionCache}>
-      <HelmetProvider>
-        <Helmet
-          titleTemplate="%s | LIT"
-          defaultTitle="LIT - Home"
-        />
-        <Provider store={store}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <MuiThemeProvider theme={createTheme(theme)}>
-              <AuthenticatedTemplate>{content}</AuthenticatedTemplate>
-            </MuiThemeProvider>
-          </LocalizationProvider>
-        </Provider>
-      </HelmetProvider>
-              </CacheProvider>
-    </PermissionsContext.Provider>
-   </FilteredRoutesContext.Provider>
-  );
+    return (
+        <FilteredRoutesContext.Provider value={filteredRoutesContext}>
+            <PermissionsContext.Provider value={permissionsContext}>
+                <CacheProvider value={emotionCache}>
+                    <HelmetProvider>
+                        <Helmet
+                            titleTemplate="%s | LIT"
+                            defaultTitle="LIT - Home"
+                        />
+                        <Provider store={store}>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <MuiThemeProvider theme={createTheme(theme)}>
+                                    <AuthenticatedTemplate>{content}</AuthenticatedTemplate>
+                                </MuiThemeProvider>
+                            </LocalizationProvider>
+                        </Provider>
+                    </HelmetProvider>
+                </CacheProvider>
+            </PermissionsContext.Provider>
+        </FilteredRoutesContext.Provider>
+    );
 }
 
 export default App;
