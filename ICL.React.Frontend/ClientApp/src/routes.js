@@ -8,6 +8,7 @@ import async from "./components/Async";
 // Layouts
 import AuthLayout from "./layouts/Auth";
 import DashboardLayout from "./layouts/Dashboard";
+import PresentationLayout from "./layouts/Presentation";
 
 // Guards
 import AuthGuard from "./components/guards/AuthGuard";
@@ -39,6 +40,7 @@ const CustomerOrdersProducts = async(() => import("./pages/dashboards/products")
 // const SaaS = async(() => import("./pages/dashboards/SaaS"));
 const Home = async(() => import("./pages/home"));
 const HomePage = async(() => import("./pages/home/Home"));
+const LandingPage = async(() => import("./pages/home/LandingPage"));
 const ControlTower = async (() => import("./pages/control-tower"));
 const CustomerUploadPage = async (() => import("./pages/control-tower/OutboundUpload"));
 // const HomeAnalytics = async(() => import("./pages/analytics/HomeAnalytics"));
@@ -141,6 +143,20 @@ const InsuranceRequirements = async(() => import("./pages/store/InsuranceRequire
 const routes = [
   {
     path: "/",
+    element: (
+        <AuthGuard>
+          <PresentationLayout />
+        </AuthGuard>
+    ),
+    children: [
+      {
+        path: "",
+        element: <LandingPage />,
+      },
+    ],
+  },
+  {
+    path: "/home",
     element: (
         <AuthGuard>
           <DashboardLayout />
