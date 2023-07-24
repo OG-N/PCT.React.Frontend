@@ -10,7 +10,7 @@ import {
   IconButton as MuiIconButton,
 } from "@mui/material";
 import {useMsal} from "@azure/msal-react";
-
+import { useTranslation } from 'react-i18next';
 // import useAuth from "../../hooks/useAuth";
 
 const IconButton = styled(MuiIconButton)`
@@ -41,6 +41,7 @@ function NavbarUserDropdown() {
     // await signOut();
     // navigate("/auth/sign-in");
   };
+  const { t } = useTranslation();
 
   return (
     <React.Fragment>
@@ -62,7 +63,7 @@ function NavbarUserDropdown() {
         onClose={closeMenu}
       >
         {/*<MenuItem onClick={closeMenu}>Profile</MenuItem>*/}
-        <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
+        <MenuItem onClick={handleSignOut}>{t('Sign out')}</MenuItem>
       </Menu>
     </React.Fragment>
   );

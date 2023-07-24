@@ -11,7 +11,7 @@ import { useTheme } from "@mui/material/styles";
 import {spacing} from "@mui/system";
 import FirstImg from "../../vendor/illustration-enable.png";
 import {NavLink} from "react-router-dom";
-
+import { useTranslation } from 'react-i18next';
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
 const Divider = styled(MuiDivider)(spacing);
@@ -20,7 +20,7 @@ const Spacer = styled.div(spacing);
 const Enable = () => {
   const theme = useTheme();
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
-
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       <Paper square={true} sx={{ width: "100%" }}>
@@ -36,7 +36,7 @@ const Enable = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Digital Twins
+                  {t('Digital Twins')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -44,19 +44,19 @@ const Enable = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <a href="https://pscm.kpmgarwin.com/login" target="_blank" rel="noopener noreferrer">
-                        Network Monitoring
+                        {t('Network Monitoring')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/enable/demand`}>
-                      Network Analytics
+                      {t('Network Analytics')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/enable/deliver`}>
-                      Network Optimization
+                      {t('Network Optimization')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -71,7 +71,7 @@ const Enable = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Chain of Custody
+                  {t('Chain of Custody')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -79,7 +79,7 @@ const Enable = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/enable/commodity-tracker`}>
-                        Commodity Tracer
+                        {t('Commodity Tracer')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -94,7 +94,7 @@ const Enable = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Green House Gas Monitoring
+                  {t('Green House Gas Monitoring')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -102,19 +102,19 @@ const Enable = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/enable/green-house-gas-monitoring`}>
-                      Annual Emissions Report
+                      {t('Annual Emissions Report')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/enable/global-monitoring`}>
-                        Global Monitoring
+                        {t('Global Monitoring')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/enable/country-monitoring`}>
-                        Country Monitoring
+                        {t('Country Monitoring')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -129,7 +129,7 @@ const Enable = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Risk Management
+                  {t('Risk Management')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -137,19 +137,19 @@ const Enable = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <a href="#">
-                        Incident Management
+                        {t('Incident Management')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a href="#">
-                        Risk Profiles
+                        {t('Risk Profiles')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a href="#">
-                        Risk Alerts
+                        {t('Risk Alerts')}
                       </a>
                       <Divider />
                     </Grid>
@@ -164,7 +164,7 @@ const Enable = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Predefined Reports
+                  {t('Predefined Reports')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -172,19 +172,19 @@ const Enable = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/enable/shipment`}>
-                        Shipment
+                        {t('Shipment')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/enable/warehousing`}>
-                        Warehousing
+                        {t('Warehousing')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/enable/transportation`}>
-                        Transportation
+                        {t('Transportation')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -199,7 +199,7 @@ const Enable = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Custom Reports
+                  {t('Custom Reports')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -207,7 +207,7 @@ const Enable = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/enable/inventory`}>
-                        Inventory
+                        {t('Inventory')}
                       </NavLink>
                       <Divider />
                     </Grid>

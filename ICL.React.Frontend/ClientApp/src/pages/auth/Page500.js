@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 
 import { Button as MuiButton, Typography } from "@mui/material";
 import { spacing } from "@mui/system";
-
+import { useTranslation } from 'react-i18next';
 const Button = styled(MuiButton)(spacing);
 
 const Wrapper = styled.div`
@@ -19,6 +19,7 @@ const Wrapper = styled.div`
 `;
 
 function Page500() {
+  const { t } = useTranslation();
   return (
     <Wrapper>
       <Helmet title="500 Error" />
@@ -26,11 +27,10 @@ function Page500() {
         500
       </Typography>
       <Typography component="h2" variant="h5" align="center" gutterBottom>
-        Internal server error.
+        {t('Internal server error.')}
       </Typography>
       <Typography component="h2" variant="body1" align="center" gutterBottom>
-        The server encountered something unexpected that didn't allow it to
-        complete the request.
+        {t('The server encountered something unexpected that didn not t allow it to complete the request.')}
       </Typography>
 
       <Button
@@ -40,7 +40,7 @@ function Page500() {
         color="secondary"
         mt={2}
       >
-        Return to website
+        {t('Return to website')}
       </Button>
     </Wrapper>
   );

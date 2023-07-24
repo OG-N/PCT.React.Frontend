@@ -6,7 +6,7 @@ import { Paper, Typography } from "@mui/material";
 
 import { ReactComponent as Logo } from "../../vendor/logo.svg";
 import SignInComponent from "../../components/auth/SignIn";
-
+import { useTranslation } from 'react-i18next';
 const Brand = styled(Logo)`
   fill: ${(props) => props.theme.palette.primary.main};
   width: 64px;
@@ -30,6 +30,7 @@ const Wrapper = styled(Paper)`
 // `;
 
 function SignIn() {
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       <Brand />
@@ -41,7 +42,7 @@ function SignIn() {
         {/*  Welcome back, Lucy!*/}
         {/*</Typography>*/}
         <Typography component="h2" variant="body1" align="center">
-          Sign in to your account to continue
+          {t('Sign in to your account to continue')}
         </Typography>
 
         <SignInComponent />
