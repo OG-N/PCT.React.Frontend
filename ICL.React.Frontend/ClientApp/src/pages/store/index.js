@@ -12,7 +12,7 @@ import { useTheme } from "@mui/material/styles";
 import {spacing} from "@mui/system";
 import FirstImg from "../../vendor/illustration-store.png";
 import {NavLink} from "react-router-dom";
-
+import { useTranslation } from 'react-i18next';
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
 const Divider = styled(MuiDivider)(spacing);
@@ -21,7 +21,7 @@ const Spacer = styled.div(spacing);
 const Store = () => {
   const theme = useTheme();
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
-
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       <Paper square={true} sx={{ width: "100%" }}>
@@ -37,7 +37,7 @@ const Store = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Inventory Monitoring
+                  {t('Inventory Monitoring')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -45,13 +45,13 @@ const Store = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/store/inventory-analysis`}>
-                        Global Inventory
+                        {t('Global Inventory')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/store/inventory-analysis`}>
-                        Country Inventory
+                        {t('Country Inventory')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -66,7 +66,7 @@ const Store = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Temperature Monitoring
+                  {t('Temperature Monitoring')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -74,13 +74,13 @@ const Store = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/store/parsyl`}>
-                        Global Temperature Monitoring
+                        {t('Global Temperature Monitoring')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/store/parsyl`}>
-                        Country Temperature Monitoring
+                        {t('Country Temperature Monitoring')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -95,7 +95,7 @@ const Store = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Insurance
+                  {t('Insurance')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -103,13 +103,13 @@ const Store = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/store/insurance-requirements`}>
-                        Insurance Requirements
+                        {t('Insurance Requirements')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/store/insurance-monitoring`}>
-                        Insurance Monitoring and Alerts
+                        {t('Insurance Monitoring and Alerts')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -125,7 +125,7 @@ const Store = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  3PL Performance
+                  {t('3PL Performance')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -137,25 +137,25 @@ const Store = () => {
                     </Grid>
                     <Grid item md={12}>
                       <a href="#">
-                        Corrective Action Reports
+                        {t('Corrective Action Reports')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a href="#">
-                        Vendor Self Inspection Reports
+                        {t('Vendor Self Inspection Reports')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a href="#">
-                        Annual Site Visit Reports
+                        {t('Annual Site Visit Reports')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a href="#">
-                        Quarterly Reviews
+                        {t('Quarterly Reviews')}
                       </a>
                       <Divider />
                     </Grid>

@@ -1,24 +1,28 @@
+import "react-app-polyfill/stable";
+
 import React, { createContext, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import { MsalProvider } from "@azure/msal-react";
-import { PublicClientApplication } from "@azure/msal-browser";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import "react-app-polyfill/stable";
+
 import "chart.js/auto";
+
+import App from "./App";
+import reportWebVitals from "./utils/reportWebVitals";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import {MsalProvider} from "@azure/msal-react";
+import {PublicClientApplication} from "@azure/msal-browser";
+import {msalConfig} from "./authConfig";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
-import App from "./App";
-import reportWebVitals from "./utils/reportWebVitals";
-import { msalConfig } from "./authConfig";
+
+const msalInstance = new PublicClientApplication(msalConfig);
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 const queryClient = new QueryClient();
-const msalInstance = new PublicClientApplication(msalConfig);
 export const LanguageContext = createContext();
 
 const AppWrapper = () => {

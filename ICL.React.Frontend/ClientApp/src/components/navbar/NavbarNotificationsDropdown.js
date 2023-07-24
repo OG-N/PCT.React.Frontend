@@ -46,7 +46,7 @@ import {NavLink} from "react-router-dom";
 //     border: 1px solid ${(props) => props.theme.palette.divider};
 //   }
 // `;
-
+import { useTranslation } from 'react-i18next';
 const Indicator = styled(Badge)`
   .MuiBadge-badge {
     background: ${(props) => props.theme.header.indicator.background};
@@ -71,11 +71,12 @@ const Heading = styled(ListItemButton)`
 `;
 
 function Demos() {
+  const { t } = useTranslation();
   return (
     <Wrapper>
       <Heading>
         <Box sx={{ fontWeight: 'bold' }}>
-          EXECUTION APPS
+          {t('EXECUTION APPS')}
         </Box>
       </Heading>
 
@@ -83,25 +84,25 @@ function Demos() {
         <Grid container spacing={6}>
           <Grid item md={12}>
             <a href={process.env.REACT_APP_SCM_URL} target="_blank" rel="noopener noreferrer">
-            Warehousing & Distribution
+            {t('Warehousing & Distribution')}
             </a>
             <Divider />
           </Grid>
           <Grid item md={12}>
             <a target="_blank" rel="noopener noreferrer" href="https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fs2c.mercell.com%2Fsso%2Fthepalladiumgroup.com&data=05%7C01%7CBVlietstra%40iplussolutions.org%7C3f396fa500444fc779d908daf49500da%7C6029b554b35744bb9f9e3036df46c4a0%7C0%7C0%7C638091218051078146%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=RwpDIGG3FojyhqnYZv5dkkSyXPH5APwFgonJplg3zDI%3D&reserved=0">
-            Sourcing
+            {t('Sourcing')}
             </a>
             <Divider />
           </Grid>
           <Grid item md={12}>
             <a target="_blank" rel="noopener noreferrer" href="https://shiny.scims.online/NextGen_ICL/">
-              Planning
+              {t('Planning')}
             </a>
             <Divider />
           </Grid>
           <Grid item md={12}>
             <a target="_blank" rel="noopener noreferrer" href="https://www.commcarehq.org">
-              Third Party Monitoring
+              {t('Third Party Monitoring')}
             </a>
             <Divider />
           </Grid>
@@ -110,49 +111,49 @@ function Demos() {
 
       <Heading>
         <Box sx={{ fontWeight: 'bold' }}>
-          ANALYTICS APPS
+          {t('ANALYTICS APPS')}
         </Box>
       </Heading>
 
       <Box px={4} my={3} sx={{ fontSize: 17, color: "#333333" }}>
         <Grid container spacing={6}>
           <Grid item md={12}>
-            <a href="https://palladium.kb.eastus2.azure.elastic-cloud.com:9243" target="_blank" rel="noopener noreferrer">Risk Management</a>
+            <a href="https://palladium.kb.eastus2.azure.elastic-cloud.com:9243" target="_blank" rel="noopener noreferrer">{t('Risk Management')}</a>
             <Divider />
           </Grid>
           <Grid item md={12}>
-            <a href="https://thepalladiumgroup.atlassian.net/servicedesk/customer/portal/26" target="_blank" rel="noopener noreferrer">Quality Management</a>
+            <a href="https://thepalladiumgroup.atlassian.net/servicedesk/customer/portal/26" target="_blank" rel="noopener noreferrer">{t('Quality Management')}</a>
             <Divider />
           </Grid>
           <Grid item md={12}>
             <NavLink to={`/enable/green-house-gas-monitoring`}>
-              Greenhouse Gas Monitoring
+              {t('Greenhouse Gas Monitoring')}
             </NavLink>
             <Divider />
           </Grid>
           <Grid item md={12}>
-            <a href="https://app.parsyl.com/report/assets?dataWindow=7&dataType=humidity&weeklyRate=false" target="_blank" rel="noopener noreferrer">Temperature Monitoring</a>
+            <a href="https://app.parsyl.com/report/assets?dataWindow=7&dataType=humidity&weeklyRate=false" target="_blank" rel="noopener noreferrer">{t('Temperature Monitoring')}</a>
             <Divider />
           </Grid>
           <Grid item md={12}>
-            <a href="https://pscm.kpmgarwin.com/" target="_blank" rel="noopener noreferrer">Digital Twin</a>
+            <a href="https://pscm.kpmgarwin.com/" target="_blank" rel="noopener noreferrer">{t('Digital Twin')}</a>
             <Divider />
           </Grid>
           <Grid item md={12}>
             <NavLink to={`/freight-bill-audit`}>
-              Freight Bill Audit
+              {t('Freight Bill Audit')}
             </NavLink>
             <Divider />
           </Grid>
           <Grid item md={12}>
             <a href="#">
-              Cost Analytics
+              {t('Cost Analytics')}
             </a>
             <Divider />
           </Grid>
           <Grid item md={12}>
             <NavLink to={`/incident-management`}>
-              Custom Reporting
+              {t('Custom Reporting')}
             </NavLink>
             <Divider />
           </Grid>

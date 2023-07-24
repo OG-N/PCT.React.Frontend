@@ -15,7 +15,7 @@ import {spacing} from "@mui/system";
 // import { orange } from "@mui/material/colors";
 import FirstImg from "../../vendor/illustration-manage.png";
 import {NavLink} from "react-router-dom";
-
+import { useTranslation } from 'react-i18next';
 const Card = styled(MuiCard)(spacing);
 const CardContent = styled(MuiCardContent)(spacing);
 const Divider = styled(MuiDivider)(spacing);
@@ -24,7 +24,7 @@ const Spacer = styled.div(spacing);
 const Manage = () => {
   const theme = useTheme();
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
-
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       <Paper square={true} sx={{ width: "100%" }}>
@@ -40,7 +40,7 @@ const Manage = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Start-Up & Mobilization
+                 {t('Start-Up & Mobilization')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -48,33 +48,33 @@ const Manage = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/manage/hq-start-up-status`}>
-                        HQ Start Up Status
+                        {t('HQ Start Up Status')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                     <NavLink to={`/manage/buy-in-status`}>
-                    Buy-In Status
+                    {t('Buy-In Status')}
                       </NavLink>
                      
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                     <NavLink to={`/manage/staffing-levels-hq`}>
-                    Staffing Levels – HQ
+                    {t('Staffing Levels – HQ')}
                       </NavLink>
                       
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/manage/staffing-levels-countries`} >
-                        Staffing Levels – Countries
+                        {t('Staffing Levels – Countries')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>  
                     <NavLink to={'/manage/regional-operations-team'}  >
-                      Staffing Level- Cost Shared Regional Operations Team
+                      {t('Staffing Level- Cost Shared Regional Operations Team')}
                     </NavLink>
                       <Divider />
                     </Grid>
@@ -90,7 +90,7 @@ const Manage = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Performance Monitoring
+                  {t('Performance Monitoring')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -98,31 +98,31 @@ const Manage = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/manage/performance-monitoring`}>
-                        Performance Dashboard
+                        {t('Performance Dashboard')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/manage/work-plan-status`}>
-                        Work Plan Status
+                        {t('Work Plan Status')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                     <NavLink to={`/manage/kpi-dashboard`}>
-                      KPI Dashboard
+                      {t('KPI Dashboard')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/manage/kpi-dashboard`}>
-                        QASP Monitoring
+                        {t('QASP Monitoring')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/manage/global-fund`}>
-                      Third Party Monitoring
+                      {t('Third Party Monitoring')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -137,7 +137,7 @@ const Manage = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Mission Satisfaction Surveys
+                  {t('Mission Satisfaction Surveys')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -145,7 +145,7 @@ const Manage = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/manage/annual-survey`}>
-                        Annual Survey
+                        {t('Annual Survey')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -166,7 +166,7 @@ const Manage = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Stakeholder Engagement
+                  {t('Stakeholder Engagement')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -174,12 +174,12 @@ const Manage = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/manage/stakeholder-register`}>
-                        Stakeholder Register
+                        {t('Stakeholder Register')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
-                    <a href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2118123557/Stakeholder+Strategy" target="_blank" rel="noopener noreferrer"> Stakeholder Strategy</a>
+                    <a href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2118123557/Stakeholder+Strategy" target="_blank" rel="noopener noreferrer">{t('Stakeholder Strategy')}</a>
                      
                       <Divider />
                     </Grid>
@@ -194,7 +194,7 @@ const Manage = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Prime Contract Management
+                  {t('Prime Contract Management')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -202,13 +202,13 @@ const Manage = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/manage/salary-approval-requests`}>
-                        Salary Approval Requests
+                        {t('Salary Approval Requests')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/manage/travel-approval-requests`}>
-                        Travel Approval Requests
+                        {t('Travel Approval Requests')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -218,13 +218,13 @@ const Manage = () => {
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/manage/deliverable-submissions`}>
-                        Deliverable Submissions
+                        {t('Deliverable Submissions')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <NavLink to={`/manage/small-business`}>
-                        Small Business Utilization
+                        {t('Small Business Utilization')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -239,7 +239,7 @@ const Manage = () => {
             <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Financial Management
+                  {t('Financial Management')}
                 </Typography>
                 <Divider />
                 <Spacer mb={4} />
@@ -247,7 +247,7 @@ const Manage = () => {
                   <Grid container spacing={6}>
                     <Grid item md={12}>
                       <NavLink to={`/manage/incremental-obligation-management`}>
-                        Incremental Obligation Management
+                        {t('Incremental Obligation Management')}
                       </NavLink>
                       <Divider />
                     </Grid>
@@ -259,19 +259,19 @@ const Manage = () => {
                     {/*</Grid>*/}
                     <Grid item md={12}>
                       <NavLink to={`/manage/letter-of-credit`}>
-                        Letter of Credit Management
+                        {t('Letter of Credit Management')}
                       </NavLink>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                       <a target="_blank" rel="noopener noreferrer" href="https://thepalladiumgroup.atlassian.net/wiki/spaces/GISS/pages/2120679425/Monthly+Financial+Reports">
-                        Monthly Financial Reports
+                        {t('Monthly Financial Reports')}
                       </a>
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                     <NavLink to={`/manage/distribution-cost-analysis`}>
-                    Distribution Cost Analysis
+                    {t('Distribution Cost Analysis')}
                       </NavLink>
                      
                       
@@ -279,14 +279,14 @@ const Manage = () => {
                     </Grid>
                     <Grid item md={12}>
                     <NavLink to={`/manage/warehousing-cost-analysis`}>
-                    Warehousing Cost Analysis
+                    {t('Warehousing Cost Analysis')}
                       </NavLink>
                       
                       <Divider />
                     </Grid>
                     <Grid item md={12}>
                     <NavLink to={`/manage/total-landed-costs-analysis`}>
-                    Total Landed Costs Analysis
+                    {t('Total Landed Costs Analysis')}
                       </NavLink>
                      
                       <Divider />
