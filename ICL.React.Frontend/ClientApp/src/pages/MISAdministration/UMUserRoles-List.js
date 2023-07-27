@@ -22,7 +22,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { geticl_role } from "../../api/icl_role";
 import { geticl_user } from "../../api/icl_user";
-
+import { useTranslation } from 'react-i18next';
 import {
     geticl_user_role,
     geticl_user_role_byid,
@@ -235,14 +235,14 @@ const UMUserRolesList = () => {
         );
         setFilteredUsers(filteredUsers);
     };
-
+    const { t } = useTranslation();
     return (
         <Card>
             <CardContent>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="h4" gutterBottom style={{ color: "darkblue", fontWeight: "bold", borderBottom: "1px solid lightgray", paddingBottom: "8px" }}>
-                            Roles Assignment
+                            {t('Roles Assignment')}
                         </Typography>
                     </Grid>
 
@@ -306,17 +306,17 @@ const UMUserRolesList = () => {
                           <Card variant="outlined" style={{ maxWidth: '450px', borderWidth: '2px', borderColor: 'black' }}>
                             <CardContent>
                                     <Typography variant="h5" gutterBottom style={{ marginBottom: '16px' }}>
-                                User Information
+                                {t('User Information')}
                               </Typography>
                               <div style={{ display: 'flex', marginBottom: '16px' }}>
                                 <Typography variant="body1" style={{ fontWeight: 'bold', width: '100px' }}>
-                                  Full Name:
+                                  {t('Full Name:')}
                                 </Typography>
                                 <Typography variant="body1">{selectedUserCard.fullName}</Typography>
                               </div>
                               <div style={{ display: 'flex' }}>
                                 <Typography variant="body1" style={{ fontWeight: 'bold', width: '100px' }}>
-                                  Email:
+                                  {t('Email:')}
                                 </Typography>
                                 <Typography variant="body1">{selectedUserCard.email}</Typography>
                               </div>
@@ -328,7 +328,7 @@ const UMUserRolesList = () => {
 
                     <Grid item xs={12}>
                         <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
-                            Roles selection:
+                            {t('Roles selection:')}
                         </Typography>
                         {sortedRolesAs.length > 0 ? (
                             <div style={{ height: 700, width: "100%" }}>
@@ -381,7 +381,7 @@ const UMUserRolesList = () => {
                             </div>
                         ) : (
                             <Typography variant="body2">
-                                No roles available.
+                                {t('No roles available.')}
                             </Typography>
                         )}
                     </Grid>
@@ -407,7 +407,7 @@ const UMUserRolesList = () => {
                             onClick={handleSaveChanges}
                             style={{ marginTop: "16px", display: showCreate ? "inline-flex" : "none" }}
                         >
-                            Save Changes
+                            {t('Save Changes')}
                         </Button>
                     </Grid>
 

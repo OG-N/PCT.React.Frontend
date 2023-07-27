@@ -134,6 +134,32 @@ const MISAdministration = () => {
                       </a>
                       <Divider />
                     </Grid>
+                    <Grid item md={12}>
+                    </Grid>
+                    <Grid item md={12}>
+                        <NavLink to={`/MISAdministration/users-list`}>
+                            {t('Users Information')}
+                        </NavLink>
+                      <Divider />
+                    </Grid>
+                    <Grid item md={12}>
+                        <NavLink to={`/MISAdministration/userroles-list`}>
+                            {t('Roles Assignment')}
+                        </NavLink>
+                      <Divider />
+                    </Grid>
+                    <Grid item md={12}>
+                        <NavLink to={`/MISAdministration/roles-list`}>
+                            {t('Roles Management')}
+                        </NavLink>
+                      <Divider />
+                    </Grid>
+                    <Grid item md={12}>
+                        <NavLink to={`/MISAdministration/roleoptions-List`}>
+                            {t('Permission Management')}
+                        </NavLink>
+                      <Divider />
+                    </Grid>
                   </Grid>
                 </Box>
               </CardContent>

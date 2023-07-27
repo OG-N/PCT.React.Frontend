@@ -22,6 +22,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { geticl_role } from "../../api/icl_role";
 import { geticl_options_route } from "../../api/icl_options_route";
+import { useTranslation } from 'react-i18next';
 import {
     geticl_role_option,
     geticl_role_option_byid,
@@ -256,14 +257,14 @@ const UMRoleOptionsList = () => {
 
         return categoryColors[category] || "black";
     };
-
+    const { t } = useTranslation();
     return (
         <Card>
             <CardContent>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="h4" gutterBottom style={{ color: "darkblue", fontWeight: "bold", borderBottom: "1px solid lightgray", paddingBottom: "8px" }}>
-                            Role Permission Management
+                            {t('Role Permission Management')}
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
@@ -289,7 +290,7 @@ const UMRoleOptionsList = () => {
                                 id="role-select"
                                 onChange={handleRoleChange}
                             >
-                                <option value="">-- Select a role --</option>
+                                <option value="">-- {t('Select a role')} --</option>
                                 {roles.map((role) => (
                                     <option
                                         key={role.id}
@@ -308,7 +309,7 @@ const UMRoleOptionsList = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
-                            Application Sections:
+                            {t('Application Sections:')}
                         </Typography>
                         {optionsRoutes.length > 0 ? (
                             <div style={{ height: 700, width: "100%" }}>
@@ -383,7 +384,7 @@ const UMRoleOptionsList = () => {
                             </div>
                         ) : (
                             <Typography variant="body2">
-                                No application sections available.
+                                {t('No application sections available.')}
                             </Typography>
                         )}
                     </Grid>
@@ -410,7 +411,7 @@ const UMRoleOptionsList = () => {
                             disabled={isLoading}
                             style={{ marginTop: "16px", display: showCreate ? "inline-flex" : "none" }}
                         >
-                            Save Changes
+                            {t('Save Changes')}
                         </Button>
                     </Grid>
                     <Grid item xs={6} style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -420,7 +421,7 @@ const UMRoleOptionsList = () => {
                             onClick={() => navigate("/MISAdministration/optionroutes-List")}
                             style={{marginTop: "16px"}}
                         >
-                            Application Sections Management
+                            {t('Application Sections Management')}
                         </Button>
                     </Grid>
 

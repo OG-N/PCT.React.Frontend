@@ -24,14 +24,28 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 const queryClient = new QueryClient();
 export const LanguageContext = createContext();
+export const DateTimeFormatContext = createContext();
 
 const AppWrapper = () => {
     const language = navigator.language.split(/[-_]/)[0] || "en";
     const [selectedLanguage, setSelectedLanguage] = useState(language);
-
     React.useEffect(() => {
         i18n.changeLanguage(selectedLanguage);
     }, [selectedLanguage]);
+
+    const [dateFormat, setDateFormat] = useState(i18n.options.format.date);
+    const [timeFormat, setTimeFormat] = useState(i18n.options.format.time);
+    const [timeZoneFormat, setTimeZoneFormat] = useState(i18n.options.format.timeZone);
+
+    React.useEffect(() => {
+        i18n.options.format.date = dateFormat;
+    }, [dateFormat]);
+    React.useEffect(() => {
+        i18n.options.format.time = timeFormat;
+    }, [timeFormat]);
+    React.useEffect(() => {
+        i18n.options.format.timeZone = timeZoneFormat;
+    }, [timeZoneFormat]);
 
     return (
         <BrowserRouter>
@@ -39,9 +53,11 @@ const AppWrapper = () => {
                 <QueryClientProvider client={queryClient}>
                     <MsalProvider instance={msalInstance}>
                         <LanguageContext.Provider value={{ selectedLanguage, setSelectedLanguage }}>
-                            <I18nextProvider i18n={i18n}>
-                                <App />
-                            </I18nextProvider>
+                            <DateTimeFormatContext.Provider value={{ dateFormat, setDateFormat, timeFormat, setTimeFormat, timeZoneFormat, setTimeZoneFormat }}>
+                                <I18nextProvider i18n={i18n}>
+                                    <App />
+                                </I18nextProvider>
+                            </DateTimeFormatContext.Provider>
                         </LanguageContext.Provider>
                     </MsalProvider>
                     <ReactQueryDevtools initialIsOpen={false} />

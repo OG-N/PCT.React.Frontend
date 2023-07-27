@@ -23,6 +23,7 @@ import { useMutation, useQuery, refetch } from "@tanstack/react-query";
 import { geticl_role, geticl_role_byid, newicl_role, updateicl_role, deleteicl_role } from "../../api/icl_role";
 import { useNavigate } from "react-router-dom";
 import { Plus as PlusIcon, CheckCircle as CheckCircleIcon, XCircle as XCircleIcon } from "react-feather";
+import { useTranslation } from 'react-i18next';
 
 const UMRolesList = () => {
     const navigate = useNavigate();
@@ -230,14 +231,14 @@ const UMRolesList = () => {
     const sortedRolesAs = [...rows].sort((a, b) =>
         a.category === "Internal" && b.category !== "Internal" ? -1 : 1
     );
-
+    const { t } = useTranslation();
     return (
         <Card>
             <CardContent>
                 <Grid container spacing={12}>
                     <Grid item md={12}>
                         <Typography variant="h4" gutterBottom style={{ color: "darkblue", fontWeight: "bold", borderBottom: "1px solid lightgray", paddingBottom: "8px" }}>
-                            Roles Management
+                            {t('Roles Management')}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -278,7 +279,7 @@ const UMRolesList = () => {
                 <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
                     <Button variant="contained" startIcon={<PlusIcon />} onClick={handleCreateRole}
                         style={{ marginTop: "16px", display: showCreate ? "inline-flex" : "none" }} >
-                          Create New Role
+                          {t('Create New Role')}
                     </Button>
                     <Typography variant="subtitle2" color="textSecondary">
                         {isLoading ? (
@@ -292,7 +293,7 @@ const UMRolesList = () => {
 
             {/* Dialog for editing role */}
             <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                <DialogTitle>Edit Role</DialogTitle>
+                <DialogTitle>{t('Edit Role')}</DialogTitle>
                 <DialogContent>
                     {selectedRole && (
                         <Grid container spacing={3}>
@@ -343,10 +344,10 @@ const UMRolesList = () => {
 
             {/* Dialog for creating a new role */}
             <Dialog open={createDialogOpen} onClose={handleCreateDialogClose}>
-                <DialogTitle>Create New Role</DialogTitle>
+                <DialogTitle>{t('Create New Role')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please provide the details for the new role.
+                        {t('Please provide the details for the new role.')}
                     </DialogContentText>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
@@ -384,10 +385,10 @@ const UMRolesList = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCreateDialogClose} color="primary">
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                     <Button onClick={handleCreateNewRole} color="primary" variant="contained">
-                        Create
+                        {t('Create')}
                     </Button>
                 </DialogActions>
             </Dialog>

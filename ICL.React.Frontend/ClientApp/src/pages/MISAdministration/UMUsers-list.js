@@ -34,7 +34,7 @@ import {
     XCircle as XCircleIcon,
 } from "react-feather";
 import { useMsal } from "@azure/msal-react";
-
+import { useTranslation } from 'react-i18next';
 
 const UMUsersList = () => {
     const { data, isLoading, isError, error, refetch } = useQuery(
@@ -295,14 +295,14 @@ const UMUsersList = () => {
                 setErrorAz(error.message);
             });
     }, []);*/
-
+    const { t } = useTranslation();
     return (
         <Card>
             <CardContent>
                 <Grid container spacing={12}>
                     <Grid item md={12}>
                         <Typography variant="h4" gutterBottom style={{ color: "darkblue", fontWeight: "bold", borderBottom: "1px solid lightgray", paddingBottom: "8px" }}>
-                            User Management - Users Information
+                            {t('User Management - Users Information')}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -350,14 +350,14 @@ const UMUsersList = () => {
                     <Grid item xs={12}>
                         <Button variant="contained" color="primary" startIcon={<PlusIcon />}
                             onClick={handleCreateUser} style={{ marginTop: "16px", display: showCreate ? "inline-flex" : "none" }}
-                        > Create New User </Button>
+                        > {t('Create New User')} </Button>
                     </Grid>
                 </Grid>
             </CardContent>
 
             {/* Dialog for editing user */}
             <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                <DialogTitle>Edit User</DialogTitle>
+                <DialogTitle>{t('Edit User')}</DialogTitle>
                 <DialogContent>
                     {selectedUser && (
                         <Grid container spacing={3}>
@@ -404,20 +404,20 @@ const UMUsersList = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleDialogClose} color="primary">
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                     <Button onClick={handleUpdateUser} color="primary" variant="contained">
-                        Save
+                        {t('Save')}
                     </Button>
                 </DialogActions>
             </Dialog>
 
             {/* Dialog for creating a new user */}
             <Dialog open={createDialogOpen} onClose={handleCreateDialogClose}>
-                <DialogTitle>Create New User</DialogTitle>
+                <DialogTitle>{t('Create New User')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please provide the details for the new user.
+                        {t('Please provide the details for the new user.')}
                     </DialogContentText>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
@@ -462,10 +462,10 @@ const UMUsersList = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCreateDialogClose} color="primary">
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                     <Button onClick={handleCreateNewUser} color="primary" variant="contained">
-                        Create
+                        {t('Create')}
                     </Button>
                 </DialogActions>
             </Dialog>

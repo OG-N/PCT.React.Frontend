@@ -26,6 +26,7 @@ import {
     updateicl_options_route,
     deleteicl_options_route,
 } from "../../api/icl_options_route";
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from "react-router-dom";
 import {
     Plus as PlusIcon,
@@ -284,14 +285,14 @@ const UMOptionRoutesList = () => {
 
         return categoryColors[category] || "black";
     };
-
+    const { t } = useTranslation();
     return (
         <Card>
             <CardContent>
                 <Grid container spacing={12}>
                     <Grid item md={12}>
                         <Typography variant="h4" gutterBottom style={{ color: "darkblue", fontWeight: "bold", borderBottom: "1px solid lightgray", paddingBottom: "8px" }}>
-                            Role Permission Management - Application Sections Management
+                            {t('Role Permission Management - Application Sections Management')}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -350,7 +351,7 @@ const UMOptionRoutesList = () => {
                                 onClick={handleCreateOptionRoute}
                                 style={{ marginTop: "16px", display: showCreate ? "inline-flex" : "none" }}
                             >
-                                Create New Application Section
+                                {t('Create New Application Section')}
                             </Button>
                     </Grid>
                     <Grid item xs={6} style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -360,7 +361,7 @@ const UMOptionRoutesList = () => {
                             onClick={() => navigate("/MISAdministration/roleoptions-List")}
                             style={{ marginTop: "16px" }}
                         >
-                            Return to Role Permission Management
+                            {t('Return to Role Permission Management')}
                         </Button>
                     </Grid>
                 </Grid>
@@ -368,7 +369,7 @@ const UMOptionRoutesList = () => {
 
             {/* Dialog for editing application section */}
             <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                <DialogTitle>Edit Application Section</DialogTitle>
+                <DialogTitle>{t('Edit Application Section')}</DialogTitle>
                 <DialogContent>
                     {selectedOptionRoute && (
                         <Grid container spacing={3}>
@@ -431,10 +432,10 @@ const UMOptionRoutesList = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleDialogClose} color="primary">
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                     <Button onClick={handleUpdateOptionRoute} color="primary" variant="contained">
-                        Save
+                        {t('Save')}
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -444,7 +445,7 @@ const UMOptionRoutesList = () => {
                 <DialogTitle>Create New Application Section</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please provide the details for the new application section.
+                        {t('Please provide the details for the new application section')}.
                     </DialogContentText>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
@@ -505,10 +506,10 @@ const UMOptionRoutesList = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCreateDialogClose} color="primary">
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                     <Button onClick={handleCreateNewOptionRoute} color="primary" variant="contained">
-                        Create
+                        {t('Create')}
                     </Button>
                 </DialogActions>
             </Dialog>
