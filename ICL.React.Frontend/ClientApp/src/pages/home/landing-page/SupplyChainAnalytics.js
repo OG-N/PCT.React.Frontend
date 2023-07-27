@@ -23,7 +23,7 @@ const SupplyChainAnalytics = () => {
                 <Paper square={true} sx={{ borderTop: 5 }} elevation={8}>
                     <Card>
                         <CardContent>
-                            <StyledNavLink to={`/home`}>
+                            <StyledNavLink to={`/psa`}>
                                 <Grid container alignItems="center" justifyContent="center" spacing={2}>
                                     <Grid item xs={12} align="center" justify="center">
                                         <Paper sx={{ width: "30%" }}>
